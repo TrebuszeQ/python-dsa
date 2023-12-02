@@ -4,12 +4,13 @@ class BubbleSort:
         self.lis: [int] = lis
 
     def sort(self):
-        if self.lis.__len__().__gt__(2):
+        lis = self.lis
+        if lis.__len__().__gt__(1):
             counter = 1
-            for ind in self.lis:
-                if self.lis[counter] is not None and ind > ind[counter]:
-                    self.lis[counter - 1], self.lis[counter] = self.lis[counter], self.lis[counter - 1]
-                counter += 1
-        else:
-            return self.lis
 
+            for i in range(len(lis)):
+                j = i + 1
+                for j in range(len(lis)):
+                    if (j + 1).__lt__(len(lis)) and lis[i].__gt(lis[j]):
+                        lis[i], lis[j] = lis[j], lis[i]
+        return lis
