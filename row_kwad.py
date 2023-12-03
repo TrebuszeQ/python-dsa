@@ -1,7 +1,7 @@
 import math
 
 
-def read_input(message):
+def odczytaj_wejscie_float(message):
     value: str
     value_float = None
 
@@ -17,35 +17,23 @@ def read_input(message):
         except ...:
             print("Wprowadzono nieprawidlowa wartosc.\n")
             value_float = None
-            break
 
     return value_float
 
 
-def get_delta(a, b, c):
+def odczytaj_trzy_zmienne_float():
+    values = [0.0, 0.0, 0.0]
+    wspolczynniki: chr = ["a", "b", "c"]
+    for i in range(0, 3):
+        values[i] = odczytaj_wejscie_float("Wprowadz wartosc " + wspolczynniki[i] + ":\n")
+    return values
+
+
+def oblicz_delte(a, b, c):
     return (b * b) - 4 * (a * c)
 
 
-def get_results(a, b, delta):
-    if delta < 0:
-        print("Brak rozwiazan.\n")
-        return None
-
-    elif delta > 0:
-        print("Dwa pierwiastki", ((-b - math.sqrt(delta)) / (2 * a)), ((-b + math.sqrt(delta)) / (2 * a)))
-        return
-    else:
-        print("Jeden pierwiastek", -b / (2 * a))
-
-
-def rownanie():
-    options = ["a", "b", "c"]
-    values = [0.0, 0.0, 0.0]
-    i = 0
-    for char in options:
-        values[i] = read_input("Wprowadz wartosc " + char + ":\n")
-        i += 1
-
+def oblicz_rownanie(values):
     a, b, c = values
 
     if a.__eq__(0):
@@ -53,7 +41,7 @@ def rownanie():
         return False
 
     else:
-        delta = get_delta(a, b, c)
+        delta = oblicz_delte(a, b, c)
 
         if delta < 0:
             print("Brak rozwiazan.\n")
@@ -71,5 +59,5 @@ def rownanie():
 
 
 if __name__ == "__main__":
-    rownanie()
+    oblicz_rownanie(odczytaj_trzy_zmienne_float())
 
