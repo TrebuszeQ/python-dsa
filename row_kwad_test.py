@@ -16,12 +16,10 @@ class TestMain(unittest.TestCase):
         result = row_kwad.odczytaj_wejscie_float("Enter a number: ")
         self.assertEqual(result, None)
 
-    @patch("builtins.input", side_effect=["0.0"])
-    @patch("builtins.input", side_effect=["2.0"])
-    @patch("builtins.input", side_effect=["3.2"])
-    def test_odczytaj_trzy_zmienne_float_prawidlowe(self, mock_input1, mock_input2, mock_input3):
+    @patch('row_kwad.odczytaj_wejscie_float.input', side_effect=['1.0', '2.0', '3.0'])
+    def test_odczytaj_trzy_zmienne_float_prawidlowe(self, mock_input):
         result = row_kwad.odczytaj_trzy_zmienne_float()
-        self.assertEqual(result, [mock_input1, mock_input2, mock_input3])
+        self.assertEqual(result, [1.0, 2.0, 3.0])
 
 
 if __name__ == '__main__':
