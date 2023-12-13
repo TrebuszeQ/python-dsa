@@ -14,4 +14,5 @@ class BubbleSort:
                 for j in range(len(lis)):
                     if (j + 1).__lt__(len(lis)) and lis[j].__gt__(lis[i]):
                         lis[i], lis[j] = lis[j], lis[i]
+
         return lis

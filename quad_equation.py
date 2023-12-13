@@ -1,47 +1,48 @@
 import math
+# my
+from cli import Cli
 
-
-# sprawdza czy wartosc jest typu float
-def is_float(arg):
-    if type(arg) is float:
-        return True
-
-    else:
-        return False
-
-
-# probuje odczytac wejscie float
-def try_read_input_float(message):
-    value: str
-    truth = False
-
-    while truth is False:
-        value = input(message)
-        value_float = None
-
-        try:
-            value_float = float(value)
-            truth = is_float(value_float)
-
-            if truth:
-                return value_float
-
-            else:
-                raise ValueError
-
-        except ValueError or ...:
-            print("Wprowadzono nieprawidlowa wartosc.\n")
-
-
-# probuje odczytac wartosc float 3 razy i zwraca tablice
-def read_float_triple():
-    values = [0.0, 0.0, 0.0]
-    variables: chr = ["a", "b", "c"]
-
-    for i in range(0, values.__len__()):
-        values[i] = try_read_input_float("Wprowadz wartosc " + variables[i] + ":\n")
-
-    return values
+# # sprawdza czy wartosc jest typu float
+# def is_float(arg):
+#     if type(arg) is float:
+#         return True
+#
+#     else:
+#         return False
+#
+#
+# # probuje odczytac wejscie float
+# def try_read_input_float(message):
+#     value: str
+#     truth = False
+#
+#     while truth is False:
+#         value = input(message)
+#         value_float = None
+#
+#         try:
+#             value_float = float(value)
+#             truth = is_float(value_float)
+#
+#             if truth:
+#                 return value_float
+#
+#             else:
+#                 raise ValueError
+#
+#         except ValueError or ...:
+#             print("Wprowadzono nieprawidlowa wartosc.\n")
+#
+#
+# # probuje odczytac wartosc float 3 razy i zwraca tablice
+# def read_float_triple():
+#     values = [0.0, 0.0, 0.0]
+#     variables: chr = ["a", "b", "c"]
+#
+#     for i in range(0, values.__len__()):
+#         values[i] = try_read_input_float("Wprowadz wartosc " + variables[i] + ":\n")
+#
+#     return values
 
 
 # oblicza i zwraca delte
@@ -76,5 +77,5 @@ def get_equation(values):
 
 
 if __name__ == "__main__":
-    get_equation(read_float_triple())
+    get_equation(Cli.read_float_triple())
 

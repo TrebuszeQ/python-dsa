@@ -3,35 +3,10 @@ from unittest.mock import patch, Mock
 import math
 # my modules
 import quad_equation
+from cli import Cli
 
 
 class TestMain(unittest.TestCase):
-
-    def test_is_float_valid(self):
-        print(__name__)
-        result = quad_equation.is_float(3.5)
-
-        self.assertTrue(result)
-
-    def test_is_float_invalid(self):
-        print(__name__)
-        result = quad_equation.is_float("3.5")
-
-        self.assertFalse(result)
-
-    @patch("builtins.input", side_effect=['10.5'])
-    def test_try_read_input_float_valid(self, mock_input):
-        print("try_read_input_float_valid")
-        result = quad_equation.try_read_input_float("Wprowadz wartosc typu float: \n")
-
-        self.assertEqual(result, 10.5)
-
-    @patch("builtins.input", side_effet=['1.0'])
-    def test_read_float_triple_valid(self, mock_input):
-        print("test_read_float_triple_valid")
-        result = quad_equation.read_float_triple()
-
-        self.assertEqual(result, [1.0, 1.0, 1.0])
 
     def test_get_delta(self):
         print("test_get_delta")
