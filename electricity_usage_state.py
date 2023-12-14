@@ -10,6 +10,32 @@ from cli import Cli
 
 
 class ElectricityUsage:
+    _started = False
+    _start = None
+    _year = None
+    _is_leap_year = None
+    _month = None
+    _day = None
+    _passed_sec = 0
+    _power = 0
+    _power_passive = 0
+    _power_passive_sum_i = 0
+    _power_passive_sum_ii = 0
+    _power_sum_i = 0
+    _power_sum_ii = 0
+    _last_month_max_passive_sum = 0
+
+    def __init__(self, start, power):
+        _started = True
+        _start = start
+        _year = datetime.year
+        _month = datetime.month
+        _day = datetime.day
+        _power = power
+        _power_passive = power * 0.1
+
+    def set_interval(self):
+        
 
     @staticmethod
     def get_year_seconds():
@@ -49,7 +75,7 @@ class ElectricityUsage:
 
     @staticmethod
     def set_interval(func):
-       pass
+        pass
 
     @staticmethod
     def print_results():
@@ -57,14 +83,7 @@ class ElectricityUsage:
 
     @staticmethod
     def main():
-        start_date = freeze_time(datetime.now())
-        start_date_ts = datetime.timestamp(start_date)
-        passed_secs = 0
-
-        month_secs = 60 * 60 * 24
-        year_secs = ElectricityUsage.get_year_seconds()
-
-        ElectricityUsage.get_electricity_usage()
+        pass
 
 
 if __name__ == "__main__":
