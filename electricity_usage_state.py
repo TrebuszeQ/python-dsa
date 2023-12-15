@@ -9,7 +9,7 @@ from leap_year import LeapYear
 from cli import Cli
 
 
-class ElectricityUsage:
+class ElectricityUsageState:
     _started = False
     _start = None
     _year = None
@@ -34,8 +34,10 @@ class ElectricityUsage:
         _power = power
         _power_passive = power * 0.1
 
-    def set_interval(self):
-        
+    @staticmethod
+    async def _set_func_interval(func):
+        timer = Timer(1.00, func)
+        timer.start()
 
     @staticmethod
     def get_year_seconds():
@@ -45,37 +47,11 @@ class ElectricityUsage:
         else:
             return 60 * 60 * 24 * 365
 
-    @staticmethod
-    def get_electricity_usage(power=3):
-        power_passive = power * 0.1
-        power_unit = "kW"
-        start = datetime.now()
-        freezer = freeze_time(datetime.now())
-        start_ts = datetime.timestamp(freezer)
-        time = datetime.now().time()
-        time_passed = datetime.now() - start
+    def get_electricity_usage_i(self, _power, _power_passive, _last_month_max_passive_sum, _power_sum_i, _power_passive_sum_i):
+        return [_power + _power_sum_i, _power_passive + _power_passive_sum_i]
 
-
-
-        print(start)
-        print(freezer)
-        power_passive_sum_i = 0
-        power_passive_sum_ii = 0
-        power_sum_i = 0
-        power_sum_ii = 0
-        last_month_max_passive_sum = 0
-
-        # if (time < 16:00)
-        #
-        # sin(time)
-    @staticmethod
-    def get_start(started):
-        if started:
-            return
-
-    @staticmethod
-    def set_interval(func):
-        pass
+    def get_electricity_usage_ii(self, _power, _power_passive, _last_month_max_passive_sum, _power_sum_ii, _power_passive_sum_ii):
+        return [_power + _power_sum_ii, _power_passive + _power_passive_sum_ii]
 
     @staticmethod
     def print_results():
@@ -87,4 +63,4 @@ class ElectricityUsage:
 
 
 if __name__ == "__main__":
-    ElectricityUsage.main()
+    ElectricityUsageState.main()
