@@ -22,7 +22,7 @@ class Stack:
         if self.empty():
             self.arr = [multi]
 
-        else:
+
 
 
     def pop(self):

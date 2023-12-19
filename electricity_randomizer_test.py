@@ -16,7 +16,7 @@ class MyTestCase(unittest.TestCase):
 
     @patch('electricity_randomizer.randint', return_value=15)
     def test_randomize_power2(self, mock_randint):
-        assert self.randomizer.randomize_power2() == 15 * 15
+        assert self.randomizer._randomize_power2() == 15 * 15
 
 
 if __name__ == '__main__':

@@ -1,5 +1,5 @@
 from datetime import datetime
-from random import random, randint
+from random import randint
 
 
 class ElectricityRandomizer:

@@ -1,13 +1,6 @@
-import asyncio
-import threading
-from math import sin
-from datetime import datetime
-from time import time, sleep
-from freezegun import freeze_time
-from threading import Timer
+from time import sleep
 
 # my
-from cli import Cli
 from leap_year import LeapYear
 from electricity_randomizer import ElectricityRandomizer
 
@@ -61,11 +54,7 @@ class ElectricityUsage:
 
     # counts powers and time
     @staticmethod
-    async def _count_powers(power, power_passive, tariff, power_max=-1, power_sum_i=0, power_sum_ii=0, power_passive_sum_i=0,
-                            power_passive_sum_ii=0):
-
-        if power_max == -1 and power > power_max:
-            power_max = power
+    def _count_powers(power, power_passive, tariff, power_sum_i=0, power_sum_ii=0, power_passive_sum_i=0, power_passive_sum_ii=0):
 
         if tariff:
             power_sum_i, power_passive_sum_i = ElectricityUsage._get_electricity_usage_i(power,
@@ -78,32 +67,29 @@ class ElectricityUsage:
                                                                                            power_sum_ii,
                                                                                            power_passive_sum_ii)
 
-        ElectricityUsage._print_results(power_sum_i, power_sum_ii, power_passive_sum_i, power_passive_sum_ii,
-                                        power_max)
+        return [power_sum_i, power_sum_ii, power_passive_sum_i, power_passive_sum_ii]
 
-        return [power_max, power_sum_i, power_sum_ii, power_passive_sum_i, power_passive_sum_ii]
-
-    # here
+    # stops after one year
     @staticmethod
-    def main(time_passed=0, values=None):
+    def main(time_passed=0, power_max=0, power_sum_i=0, power_sum_ii=0, power_passive_sum_i=0, power_passive_sum_ii=0):
         power, power_passive, date, hour = ElectricityRandomizer.get_bulk()
 
-        if time_passed == 0:
-            tariff, power_max, power_sum_i, power_sum_ii, power_passive_sum_i, power_passive_sum_ii = (
-                ElectricityUsage._get_tariff(hour), power, 0, 0, 0, 0)
+        if power > power_max:
+            power_max = power
 
         if ElectricityUsage._is_new_month(date) and ElectricityUsage._is_new_year(date, time_passed):
-            return values
+            return time_passed, power_sum_i, power_sum_ii, power_passive_sum_i, power_passive_sum_ii, power_max
 
-        elif ElectricityUsage._is_new_month(date):
-            values = [power, power_passive, ElectricityUsage._get_tariff(hour), power, 0, 0, 0]
+        elif ElectricityUsage._is_new_month(date) or time_passed == 0:
+            power_max, power_sum_i, power_sum_ii, power_passive_sum_i, power_passive_sum_ii = power, 0, 0, 0, 0
 
-        if time_passed == 0:
-            values = ElectricityUsage._count_powers(power, power_passive, tariff, power_max, power_sum_i, power_sum_ii, power_passive_sum_i,
-                            power_passive_sum_ii)
+        power_sum_i, power_sum_ii, power_passive_sum_i, power_passive_sum_ii = ElectricityUsage._count_powers(power, power_passive, ElectricityUsage._get_tariff(hour), power_sum_i, power_sum_ii, power_passive_sum_i, power_passive_sum_ii)
+
+        ElectricityUsage._print_results(power_sum_i, power_sum_ii, power_passive_sum_i, power_passive_sum_ii,
+                                        power_max)
         sleep(1)
         time_passed += 1
-        ElectricityUsage.main()
+        ElectricityUsage.main(time_passed, power_max, power_sum_i, power_sum_ii, power_passive_sum_i, power_passive_sum_ii)
 
 
 if __name__ == "__main__":
