@@ -79,7 +79,7 @@ class ElectricityUsage:
         if power > power_max:
             power_max = power
 
-        if ElectricityUsage._is_new_month(date) and ElectricityUsage._is_new_year(date, time_passed):
+        if ElectricityUsage._is_new_year(date, time_passed):
             return time_passed, power_sum_i, power_sum_ii, power_passive_sum_i, power_passive_sum_ii, power_max
 
         elif ElectricityUsage._is_new_month(date) or time_passed == 0:
@@ -88,6 +88,7 @@ class ElectricityUsage:
         power_sum_i, power_sum_ii, power_passive_sum_i, power_passive_sum_ii = ElectricityUsage._count_powers(power, power_passive, ElectricityUsage._get_tariff(hour), power_sum_i, power_sum_ii, power_passive_sum_i, power_passive_sum_ii)
 
         ElectricityUsage._print_results(power_sum_i, power_sum_ii, power_passive_sum_i, power_passive_sum_ii,
+
                                         power_max)
         sleep(1)
         time_passed += 1
