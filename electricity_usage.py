@@ -38,6 +38,8 @@ class ElectricityUsage:
         if date.day == 1:
             return True
 
+        return False
+
     @staticmethod
     def _is_new_year(date, time_passed):
         if LeapYear.is_leap_year(date.year):
@@ -46,7 +48,7 @@ class ElectricityUsage:
         else:
             year_seconds = 31536000
 
-        if time_passed == year_seconds:
+        if time_passed.__eq__(year_seconds):
             return True
 
         else:

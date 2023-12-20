@@ -11,8 +11,11 @@ class MyTestCase(unittest.TestCase):
     def test_take_year(self, mock_input):
         self.assertEqual(LeapYear.take_year(), 1997)
 
-    def test_is_leap_year(self):
-        self.assertTrue(LeapYear.is_leap_year(1997))
+    def test_is_leap_year_true(self):
+        self.assertTrue(LeapYear.is_leap_year(1996))
+
+    def test_is_leap_year_false(self):
+        self.assertFalse(LeapYear.is_leap_year(2021))
 
 
 if __name__ == '__main__':

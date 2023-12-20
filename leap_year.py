@@ -13,11 +13,11 @@ class LeapYear(object):
     # 4b)
     @staticmethod
     def is_leap_year(year):
-        if ((year.__mod__(4) != 0) and (year.__mod__(100) > 0)) or year.__mod__(400) == 0:
+        if ((year.__mod__(4) == 0) and (year.__mod__(100) > 0)) or year.__mod__(400) == 0:
             return True
 
         else:
-            return True
+            return False
 
     @staticmethod
     def print_is_leap_year(year, truth):
