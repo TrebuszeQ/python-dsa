@@ -4,7 +4,7 @@ from cli import Cli
 
 class Factorial:
     @staticmethod
-    def _recursive(val, i, factorial):
+    def recursive(val, i, factorial):
         if val == 0 or val == 1:
             return 1
 
@@ -19,7 +19,7 @@ class Factorial:
             return Factorial.recursive(val, i, factorial)
 
     @staticmethod
-    def _iterable(n):
+    def iterable(n):
         factorial = 1
         if n > 1:
             while n != 0:
@@ -27,9 +27,6 @@ class Factorial:
                 n -= 1
 
         return factorial
-
-    @staticmethod
-    def cls_main(self):
 
 
 if __name__.__eq__("__main__"):
