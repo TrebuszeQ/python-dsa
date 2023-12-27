@@ -72,3 +72,20 @@ class Cli:
             values[i] = Cli.try_read_input_float("Wprowadz wartosc " + variables[i] + ":\n")
 
         return values
+
+    @staticmethod
+    # wyswietla opcje menu i wiadomosc koncowa oraz poczatkowa
+    def print_menu(start_message, end_message, options):
+        if start_message is not None:
+            print(start_message)
+
+        if options is None or options.__len__() == 0:
+            print("No options.")
+
+        else:
+            print("Menu:\n")
+            for option in options:
+                print(option)
+
+        if end_message is not None:
+            print(end_message)
