@@ -7,7 +7,7 @@ from cli import Cli
 class Factorial:
     @staticmethod
     def recursive(val, i, factorial):
-        if val == 0 or val == 1:
+        if val.__lt__(1):
             return 1
 
         elif i.__lt__(val):
@@ -17,8 +17,7 @@ class Factorial:
             i += 1
             return Factorial.recursive(val, i, factorial)
 
-        else:
-            return factorial
+        return factorial
 
     @staticmethod
     def recursive_timed(val, i, factorial, start):
