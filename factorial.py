@@ -22,7 +22,7 @@ class Factorial:
     @staticmethod
     def recursive_timed(val, i, factorial, start):
         if i == 0:
-            start = Factorial._get_start_time()
+            start = datetime.now()
 
         if val == 0 or val == 1:
             return 1
@@ -49,8 +49,7 @@ class Factorial:
 
     @staticmethod
     def iterable_timed(n):
-        start = Factorial._get_start_time()
-        return Factorial.iterable(n), Factorial._get_time_diff(start)
+        return Factorial.iterable(n), Factorial._get_time_diff(datetime.now())
 
     @staticmethod
     def print_timed(inp, factorial, time, recursive):
@@ -59,10 +58,6 @@ class Factorial:
 
         else:
             print(f"Silnia z {inp} wynosi {factorial}.\nIteratywny program trwal ~{time:f} sekund.\n")
-
-    @staticmethod
-    def _get_start_time():
-        return datetime.now()
 
     @staticmethod
     def _get_time_diff(start):
@@ -79,22 +74,23 @@ class Factorial:
         while opt != 5:
             Cli.print_menu("Dostepne opcje programu silnia:\n", None, options)
             opt = abs(Cli.try_read_input_int("Podaj numer opcji.\n"))
-            arg = abs(Cli.try_read_input_int("Podaj dodatnia liczbe calkowita.\n"))
 
             match opt:
                 case 1:
-                    factorial = Factorial.recursive(arg, 0, 0)
-                    print(f"Silnia z {arg} wynosi {factorial}.\n")
+                    arg = abs(Cli.try_read_input_int("Podaj dodatnia liczbe calkowita .\n"))
+                    print(f"Silnia z {arg} wynosi {Factorial.recursive(arg, 0, 0)}.\n")
 
                 case 2:
-                    factorial = Factorial.iterable(arg)
-                    print(f"Silnia z {arg} wynosi {factorial}.\n")
+                    arg = abs(Cli.try_read_input_int("Podaj dodatnia liczbe calkowita.\n"))
+                    print(f"Silnia z {arg} wynosi {Factorial.iterable(arg)}.\n")
 
                 case 3:
-                    factorial, time_diff = Factorial.recursive_timed(arg, 0, 0, Factorial._get_start_time())
+                    arg = abs(Cli.try_read_input_int("Podaj dodatnia liczbe calkowita.\n"))
+                    factorial, time_diff = Factorial.recursive_timed(arg, 0, 0, datetime.now())
                     Factorial.print_timed(arg, factorial, time_diff, True)
 
                 case 4:
+                    arg = abs(Cli.try_read_input_int("Podaj dodatnia liczbe calkowita.\n"))
                     factorial, time_diff = Factorial.iterable_timed(arg)
                     Factorial.print_timed(arg, factorial, time_diff, False)
 
