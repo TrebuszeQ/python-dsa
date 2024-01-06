@@ -11,7 +11,7 @@ class MyTestCase(unittest.TestCase):
         self.assertEqual(6402373705728000, Factorial.iterable(18))
 
     def test_recursive(self):
-        self.assertEqual(6402373705728000, Factorial.recursive(18, 0, 0))
+        self.assertEqual(6402373705728000, Factorial.recursive(18))
 
 
 if __name__ == '__main__':
