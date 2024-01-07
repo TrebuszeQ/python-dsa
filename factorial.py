@@ -1,11 +1,12 @@
-from datetime import datetime, timedelta
-from freezegun import freeze_time
+from datetime import datetime
+from sys import getsizeof
 # my
 from cli import Cli
 
 
 class Factorial:
 
+    # silnia rekursywna
     @staticmethod
     def recursive(n):
         if n == 0:
@@ -14,27 +15,15 @@ class Factorial:
         else:
             return n * Factorial.recursive(n - 1)
 
-    # @staticmethod
-    # def recursive(val, i, factorial):
-    #     if val.__lt__(1):
-    #         return 1
-    #
-    #     elif i.__lt__(val):
-    #         if factorial == 0:
-    #             factorial = 1
-    #         factorial += factorial * i
-    #         i += 1
-    #         return Factorial.recursive(val, i, factorial)
-    #
-    #     return factorial
-    #
+    # silnia rekursywna z obliczaniem czasu
     @staticmethod
     def recursive_timed(n):
         start = datetime.now()
         return Factorial.recursive(n), Factorial._get_time_diff(start)
 
+    # silnia iteracyjna
     @staticmethod
-    def iterable(n):
+    def iterative(n):
         factorial = 1
         if n >= 1:
             while n != 1:
@@ -43,34 +32,56 @@ class Factorial:
 
         return factorial
 
+    # silnia iteracyjna z obliczaniem czasu
     @staticmethod
-    def iterable_timed(n):
+    def iterative_timed(n):
         start = datetime.now()
-        return Factorial.iterable(n), Factorial._get_time_diff(start)
+        return Factorial.iterative(n), Factorial._get_time_diff(start)
 
+    # silnia iteracyjna z obliczaniem czasu i rozszerzonymi komunikatami
+    @staticmethod
+    def iterative_verbose(n):
+        start = datetime.now()
+
+        factorial = 1
+        if n >= 1:
+            while n != 1:
+                factorial = factorial * n
+                n -= 1
+                print('type(n):', type(n), 'sizeof(n):', getsizeof(n), 'type(S):', type(factorial), 'sizeof(S):',
+                      getsizeof(factorial))
+
+        return factorial, Factorial._get_time_diff(start)
+
+    # wyswietla wyniki i czas obliczen
     @staticmethod
     def print_timed(inp, factorial, time, recursive):
         if recursive:
-            print(f"Silnia z {inp} wynosi {factorial}.\nRekursywny program trwal ~{time:f} sekund.\n")
+            print(f"Silnia rekursywna z {inp} wynosi {factorial}.\nProgram trwal ~{time:f} sekund.\n")
 
         else:
-            print(f"Silnia z {inp} wynosi {factorial}.\nIteratywny program trwal ~{time:f} sekund.\n")
+            print(f"Silnia iteracyjna z {inp} wynosi {factorial}.\nProgram trwal ~{time:f} sekund.\n")
 
+    # kalkuluje roznice czasowa
     @staticmethod
     def _get_time_diff(start):
         return datetime.now().__sub__(start).total_seconds()
 
+    # wyswietla menu
     @staticmethod
     def menu():
         opt = 0
+
         options = ("1. Algorytm rekursywny.",
-                   "2. Algorytm iteracyjny.",
-                   "3. Algorytm rekursywny z mierzeniem czasu.",
+                   "2. Algorytm rekursywny z mierzeniem czasu.",
+                   "3. Algorytm iteracyjny.",
                    "4. Algorytm iteracyjny z mierzeniem czasu.",
-                   "5. Wyjscie.\n")
-        while opt != 5:
+                   "5. Algorytm iteracyjny z mierzeniem czasu i rozszerzonymi komunikatami.",
+                   "6. Wyjscie.\n")
+
+        while opt != len(options):
             Cli.print_menu("Dostepne opcje programu silnia:\n", None, options)
-            opt = abs(Cli.try_read_input_int("Podaj numer opcji.\n"))
+            opt = abs(Cli.try_read_input_int("Podaj numer odpowiadajacy opcji.\n"))
 
             match opt:
                 case 1:
@@ -79,19 +90,24 @@ class Factorial:
 
                 case 2:
                     arg = abs(Cli.try_read_input_int("Podaj dodatnia liczbe calkowita.\n"))
-                    print(f"Silnia z {arg} wynosi {Factorial.iterable(arg)}.\n")
-
-                case 3:
-                    arg = abs(Cli.try_read_input_int("Podaj dodatnia liczbe calkowita.\n"))
                     factorial, time_diff = Factorial.recursive_timed(arg)
                     Factorial.print_timed(arg, factorial, time_diff, True)
 
+                case 3:
+                    arg = abs(Cli.try_read_input_int("Podaj dodatnia liczbe calkowita.\n"))
+                    print(f"Silnia z {arg} wynosi {Factorial.iterative(arg)}.\n")
+
                 case 4:
                     arg = abs(Cli.try_read_input_int("Podaj dodatnia liczbe calkowita.\n"))
-                    factorial, time_diff = Factorial.iterable_timed(arg)
+                    factorial, time_diff = Factorial.iterative_timed(arg)
                     Factorial.print_timed(arg, factorial, time_diff, False)
 
                 case 5:
+                    arg = abs(Cli.try_read_input_int("Podaj dodatnia liczbe calkowita.\n"))
+                    factorial, time_diff = Factorial.iterative_verbose(arg)
+                    Factorial.print_timed(arg, factorial, time_diff, False)
+
+                case 6:
                     exit(1)
 
 
