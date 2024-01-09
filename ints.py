@@ -1,7 +1,7 @@
 from cli import Cli
 
 
-class IntegerSum:
+class Ints:
     # b)
     @staticmethod
     def _sum_integer_len(value):
@@ -24,14 +24,14 @@ class IntegerSum:
 
     # d)
     @staticmethod
-    def cls_main():
+    def interface():
         # Cli.try_read_input_int() == a)
-        sumi = IntegerSum._sum_integer_len(Cli.try_read_input_int("Podaj liczbe calkowita.\n"))
-        IntegerSum._print_sum(sumi)
+        sumi = Ints._sum_integer_len(Cli.try_read_input_int("Podaj liczbe calkowita.\n"))
+        Ints._print_sum(sumi)
 
 
 if __name__ == '__main__':
-    IntegerSum.cls_main()
+    Ints.interface()
 
 
 

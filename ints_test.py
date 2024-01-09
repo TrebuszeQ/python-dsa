@@ -2,12 +2,12 @@ import unittest
 from unittest.mock import patch
 
 # my
-from integer_sum import IntegerSum
+from ints import Ints
 
 
-class MyTestCase(unittest.TestCase):
+class IntsTestCase(unittest.TestCase):
     def test_sum_integer_len(self):
-        result = IntegerSum._sum_integer_len(555)
+        result = Ints._sum_integer_len(555)
         self.assertEqual(15, result)
 
 
