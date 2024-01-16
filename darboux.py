@@ -11,12 +11,17 @@ class Darboux:
         x = (a + b)/2
         f = x*x*x - x*x - x + 2
 
+        if c == 800:
+            print("Funkcja nie ma pierwiastków w przedziale.")
+            return False;
+
         if abs(f) <= d:
-            print(x, 'z dokladnoscia ', d)
+            print(x, 'z dokładnością ', d)
+            return x
 
         elif ((a*a*a - a*a - a + 2) * f) < 0:
             return Darboux.find_zero(a, x, d, c)
 
         else:
-            Darboux.find_zero(x, b, d, c)
+            return Darboux.find_zero(x, b, d, c)
 
