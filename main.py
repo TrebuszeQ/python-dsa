@@ -1,16 +1,17 @@
-# This is a sample Python script.
+from cli import Cli
 
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
-
-
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
-
-
-# Press the green button in the gutter to run the script.
 if __name__ == '__main__':
-    print_hi('PyCharm')
+    opts = ("1. Struktury i typy danych.\n",
+            "2. Sortowanie.\n",
+            "3. Matematyczne.\n",
+            "4. Data.\n",
+            "5. Rozne.\n",
+            "6. Wyjscie.\n")
 
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+    Cli.print_menu("Struktury danych i algorytmy.\n", "", opts)
+
+    opt = 0
+    while opt != opts.__len__():
+        opt = Cli.try_read_input_int("Podaj numer opcji [typu calkowitego].\n")
+
+        

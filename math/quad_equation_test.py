@@ -1,9 +1,8 @@
 import unittest
-from unittest.mock import patch, Mock
+from unittest.mock import patch
 import math
 # my modules
 import quad_equation
-from cli import Cli
 
 
 class TestMain(unittest.TestCase):

@@ -74,13 +74,27 @@ class Cli:
         return values
 
     @staticmethod
+    def read_range_float(msg1, msg2):
+        a = 0
+        b = 0
+
+        while a >= b:
+            a = Cli.try_read_input_float(msg1)
+            b = Cli.try_read_input_float(msg2)
+
+            if a >= b:
+                print("a nie moze byc wieksze, badz rowne b.")
+
+        return a, b
+
+    @staticmethod
     # wyswietla opcje menu i wiadomosc koncowa oraz poczatkowa
     def print_menu(start_message, end_message, options):
         if start_message is not None:
             print(start_message)
 
         if options is None or options.__len__() == 0:
-            print("No options.")
+            print("Brak wybranej opcji.")
 
         else:
             print("Menu:\n")

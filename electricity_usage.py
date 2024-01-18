@@ -1,7 +1,7 @@
 from time import sleep
 
 # my
-from leap_year import LeapYear
+from data.leap_year import LeapYear
 from electricity_randomizer import ElectricityRandomizer
 
 
