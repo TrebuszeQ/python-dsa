@@ -1,8 +1,17 @@
 class InsertionSort:
     @staticmethod
-    def insertion_sort(arr):
+    def sort(arr):
 
         for i in range(len(arr)):
-            for j in range(len(arr)):
-                if arr[i] < arr[i-1]:
-                    arr[i], arr[i-1] = arr[i-1], arr[i]
+            j = i - 1
+
+            while j >= 0:
+                # debugging purpose
+                # lol = arr[j+1]
+                # lol2 = arr[j]
+                if arr[j+1] < arr[j]:
+                    arr[j], arr[j+1] = arr[j+1], arr[j]
+                j -= 1
+
+        print(arr)
+        return arr
