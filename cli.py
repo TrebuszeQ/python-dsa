@@ -103,3 +103,57 @@ class Cli:
 
         if end_message is not None:
             print(end_message)
+
+    @staticmethod
+    def print_menu_dict(start_message, end_message, options_dict):
+        if start_message is not None:
+            print(start_message)
+
+        if options_dict is None or options_dict.__len__() == 0:
+            print("Brak wybranej opcji.")
+
+        else:
+            print("Menu:\n")
+            for dic in options_dict:
+                print(dic.__getitem__("name"))
+
+        if end_message is not None:
+            print(end_message)
+
+    @staticmethod
+    def _callback(func, args):
+        if args is not None:
+            func(args)
+
+        else:
+            func()
+
+    @staticmethod
+    def menu(options_dict, menu_msg, end_msg):
+
+        opt = 0
+        while opt != options_dict.__len__():
+            Cli.print_menu_dict(menu_msg, "", options_dict)
+
+            opt = Cli.try_read_input_int("Podaj numer opcji [typu calkowitego].\n")
+            opt -= 1
+
+            if opt == options_dict.__len__():
+                print("Wyjscie.\n")
+
+                if end_msg is not None:
+                    print(end_msg)
+
+                return
+
+            elif options_dict.__len__() > 0:
+                args = options_dict[opt].__getitem__("func_args")
+
+                if args is not None:
+                    options_dict[opt].__getitem__("function")(args)
+
+                else:
+                    options_dict[opt].__getitem__("function")()
+
+
+
