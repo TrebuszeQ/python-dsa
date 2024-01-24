@@ -1,38 +1,37 @@
 
 
 class QuickSort:
-    @staticmethod
-    def _pick_pivot_last(arr):
-        return arr[arr.__len__() - 1]
 
     @staticmethod
-    def _sort(arr, i):
+    def _sort(arr, low, high):
 
-        if arr[i + 1] is not None and arr[i] > arr[i + 1]:
-            arr[i], arr[i + 1] = arr[i + 1], arr[i]
-            i += 1
-            return QuickSort._sort(arr, i)
+        if low < high:
+            part = QuickSort._hoare_partition(arr, low, high)
+            QuickSort._sort(arr, low, part - 1)
+            QuickSort._sort(arr, part + 1, high)
 
-        elif arr[i + 1] is None:
-            return arr
+        else:
+            pass
 
-    @staticmethod
-    def sort(arr):
-        res = QuickSort._partition(QuickSort._pick_pivot_last(arr), arr)
-        res[0].extend(res[1])
-        print(res[0])
-        return res[0]
+        return arr
 
     @staticmethod
-    def _partition(pivot, arr):
-        res = [[], []]
+    def sort(arr, low, high):
+        res = QuickSort._sort(arr, low, high)
 
-        i = 0
-        while i < len(arr):
-            if arr[i] >= pivot:
-                res[1].append(arr[i])
-            else:
-                res[0].append(arr[i])
-            i += 1
-
+        print(res)
         return res
+
+    @staticmethod
+    def _hoare_partition(arr, low, high):
+        pivot = arr[high]
+        i = low - 1
+
+        for j in range(low, high):
+            if arr[j] <= pivot:
+                i = i + 1
+                arr[i], arr[j] = arr[j], arr[i]
+
+        arr[i + 1], arr[high] = arr[high], arr[i + 1]
+
+        return i + 1

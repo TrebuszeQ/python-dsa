@@ -121,12 +121,16 @@ class Cli:
             print(end_message)
 
     @staticmethod
-    def _callback(func, args):
-        if args is not None:
-            func(args)
+    def _callback(fun, args):
+        # print(args, isinstance(args, tuple))
+        if args is not None and isinstance(args, tuple):
+            fun(*args)
 
-        else:
-            func()
+        if args is not None and not isinstance(args, tuple):
+            fun(args)
+
+        elif args is None:
+            fun()
 
     @staticmethod
     def menu(options_dict, menu_msg, end_msg):
@@ -147,13 +151,6 @@ class Cli:
                 return
 
             elif options_dict.__len__() > 0:
-                args = options_dict[opt].__getitem__("func_args")
-
-                if args is not None:
-                    options_dict[opt].__getitem__("function")(args)
-
-                else:
-                    options_dict[opt].__getitem__("function")()
-
-
+                args = options_dict[opt]["func_args"]
+                Cli._callback(options_dict[opt]["function"], args)
 
