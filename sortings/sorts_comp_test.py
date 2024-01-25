@@ -27,12 +27,25 @@ class SortsCompCase(unittest.TestCase):
     # formatuje wyswietlanie tablicy przed i po sortowaniu
 
     @staticmethod
-    def print_arr_fm(i, arr1, arr2):
+    def _print_arr(arr, intro, outro):
+        if intro is not None:
+            print(intro)
+
+        for i in range(len(arr)):
+            print(f'{i:2}: {arr[i]:5}')
+
+        if outro is not None:
+            print(outro)
+
+    @staticmethod
+    def print_arr_comp_fm(i, arr1, arr2):
         print(f'{i:2}: {arr1[i]:5} {arr2[i]}:5')
 
     @staticmethod
     def _run_all_unsorted(arr):
-        res_bub = BubbleSort.sort(arr)
+        res_bub = BubbleSort.sort_count(arr)
+        SortsCompCase._print_arr(res_bub[0], "Sortowanie babelkowe.\n", f"Liczba porownan: {res_bub[1]}")
+
         res_ins = InsertionSort.sort(arr)
         res_sel = SelectionSort.sort(arr)
         res_qui = QuickSort.sort(arr, 0, (len(arr) - 1))
@@ -41,7 +54,7 @@ class SortsCompCase(unittest.TestCase):
 
     @staticmethod
     def _run_all_sorted(arr):
-        res_bub = BubbleSort.sort(arr)
+        res_bub = BubbleSort.sort_count(arr)[0]
         res_ins = InsertionSort.sort(arr)
         res_sel = SelectionSort.sort(arr)
         res_qui = QuickSort.sort(arr, 0, (len(arr) - 1))
