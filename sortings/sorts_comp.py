@@ -1,37 +1,65 @@
-from sortings import BubbleSort, InsertionSort, SelectionSort, QuickSort
-from cli import Cli
+import random
 
-# sortings comparison
+# my
+from bubble_sort import BubbleSort
+from insertion_sort import InsertionSort
+from selection_sort import SelectionSort
+from quick_sort import QuickSort
+
+
 class SortsComp:
     @staticmethod
-    def print_arr(lis, intro, outro):
-        if intro is not None:
-            print(intro)
+    def _gen_arr(n):
+        arr = [-1]
 
-        for i in range(len(lis)):
-            print(i, ". ", lis[i])
+        random.seed(1)
+        for i in range(0, n - 1):
+            arr.append(random.randint(0, 999))
 
-        if outro is not None:
-            print(outro)
+        return arr
 
-    @staticmethod
-    def _run_all_unsorted(arr):
-        res_bub = BubbleSort.sort(arr)
-        res_ins = InsertionSort.sort(arr)
-        res_sel = SelectionSort.sort(arr)
-        res_qui = QuickSort.sort(arr, 0, (len(arr)-1))
-
-        return res_bub, res_ins, res_sel, res_qui
+    arr = _gen_arr(20)
 
     @staticmethod
-    def _run_all_sorted(arr):
-        res_bub = BubbleSort.sort(arr)
-        res_ins = InsertionSort.sort(arr)
-        res_sel = SelectionSort.sort(arr)
-        res_qui = QuickSort.sort(arr, 0, (len(arr) - 1))
-
-        return res_bub, res_ins, res_sel, res_qui
+    def _gen_unsorted_comparison_arr():
+        return [
+            {"Algo": "Bubble sort", "Array": BubbleSort.sort_downto_count(SortsComp._gen_arr(20))},
+            {"Algo": "Insertion sort with guard", "Array": InsertionSort.sort_count(SortsComp._gen_arr(20))},
+            {"Algo": "Insertion sort with flag", "Array": InsertionSort.sort_flag_count(SortsComp._gen_arr(20))},
+            {"Algo": "Selection sort", "Array": SelectionSort.sort2_count(SortsComp._gen_arr(20))},
+            {"Algo": "Quick sort", "Array": QuickSort.sort(SortsComp._gen_arr(20), 0, (len(SortsComp._gen_arr(20)) - 1))}
+        ]
 
     @staticmethod
-    def compare():
+    def _gen_sorted_comparison_arr(arr):
+        return [
+            {"Algo": "Bubble sort", "Array": BubbleSort.sort_downto_count(arr)},
+            {"Algo": "Insertion sort with guard", "Array": InsertionSort.sort_count(arr)},
+            {"Algo": "Insertion sort with flag", "Array": InsertionSort.sort_flag_count(arr)},
+            {"Algo": "Selection sort", "Array": SelectionSort.sort2_count(arr)},
+            {"Algo": "Quick sort", "Array": QuickSort.sort(SortsComp._gen_arr(20), 0, (len(arr) - 1))}
+        ]
 
+    @staticmethod
+    def print_comparison_table(arr, msg):
+        print()
+        print(msg)
+        print(f"{'Algorytm':30}", f"{'Liczba porownan':20}", f"{'Liczba zamian':20}")
+        print()
+
+        for i in range(len(arr)):
+            name = arr[i].__getitem__("Algo")
+            current = arr[i].__getitem__("Array")
+            print(f"{name:30}", f"{current[1]:0}", f"{current[2]:20}")
+
+        print()
+
+    @staticmethod
+    def menu():
+        SortsComp.print_comparison_table(SortsComp._gen_unsorted_comparison_arr(), "Porownanie wynikow sortowan na nieposortowanej tablicy")
+        print()
+        SortsComp.print_comparison_table(SortsComp._gen_sorted_comparison_arr(sorted(SortsComp.arr)), "Porownanie wynikow sortowan na posortowanej tablicy")
+
+
+if __name__ == "__main__":
+    SortsComp.menu()

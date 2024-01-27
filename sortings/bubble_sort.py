@@ -2,29 +2,53 @@
 class BubbleSort:
     # worst case O(N^2), in place, stable
     @staticmethod
-    def sort(lis):
-        if lis.__len__().__gt__(1):
-            for i in range(len(lis)):
-                j = i + 1
-                for j in range(len(lis)):
-                    if (j + 1).__lt__(len(lis)) and lis[j].__gt__(lis[i]):
-                        lis[i], lis[j] = lis[j], lis[i]
+    def sort(arr):
+        for i in range(len(arr)):
 
-        print(lis, "\n")
-        return lis
+            j = i + 1
+            for j in range(0, len(arr) - i - 1):
+                if arr[j] > arr[j + 1]:
+                    arr[j], arr[j + 1] = arr[j + 1], arr[j]
+
+        print(arr)
+        return arr
 
     @staticmethod
-    def sort_count(lis):
+    def sort_downto_count(arr):
         comp_count = 0
         swap_count = 0
 
-        if lis.__len__().__gt__(1):
+        i = 1
+        for i in range(len(arr) - 1):
+            comp_count += 1
 
-            for i in range(len(lis)):
-                j = i + 1
-                for j in range(len(lis)):
-                    if (j + 1).__lt__(len(lis)) and lis[j].__gt__(lis[i]):
-                        lis[i], lis[j] = lis[j], lis[i]
-                        comp_count += 1
+            for j in range(len(arr) - 1, i + 1, -1):
+                comp_count += 1
 
-        return lis, comp_count
+                if arr[j - 1] > arr[j]:
+                    arr[j - 1], arr[j] = arr[j], arr[j - 1]
+                    swap_count += 1
+
+        print(arr)
+        return arr, comp_count, swap_count
+
+    # deliberately i = 1
+    @staticmethod
+    def sort_count(arr):
+        comp_count = 0
+        swap_count = 0
+
+        i = 1
+        for i in range(len(arr) - 1):
+            comp_count += 1
+
+            j = i + 1
+            for j in range(0, len(arr) - i - 1):
+                comp_count += 1
+
+                if arr[j] > arr[j + 1]:
+                    arr[j], arr[j + 1] = arr[j + 1], arr[j]
+                    swap_count += 1
+
+        print(arr)
+        return arr, comp_count, swap_count
