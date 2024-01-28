@@ -13,7 +13,7 @@ class SortsComp:
         arr = [-1]
 
         random.seed(1)
-        for i in range(0, n - 1):
+        for i in range(0, n):
             arr.append(random.randint(0, 999))
 
         return arr

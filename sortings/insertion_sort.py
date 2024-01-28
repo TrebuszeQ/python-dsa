@@ -21,19 +21,20 @@ class InsertionSort:
         comp_count = 0
         swap_count = 0
 
-        for i in range(2, len(arr)):
-            comp_count += 1
+        for i in range(2, len(arr) - 1):
             key = arr[i]
+            arr[i] = key
+            swap_count += 1
 
             j = i - 1
-            while j >= 0 and key < arr[j]:
-                comp_count += 1
-
+            comp_count += 1
+            while key < arr[j]:
                 arr[j + 1] = arr[j]
                 swap_count += 1
-                j -= 1
+                j = j - 1
 
             arr[j + 1] = key
+            swap_count += 1
 
         print(arr)
         return arr, comp_count, swap_count
@@ -44,14 +45,14 @@ class InsertionSort:
         swap_count = 0
 
         for i in range(1, len(arr) - 1):
-            comp_count += 1
             flag = False
 
             j = i + 1
+            comp_count += 2
             while flag is False or j >= 1:
-                comp_count += 1
 
-                if (arr[j - 1] is not None) and arr[j] < arr[j - 1]:
+                comp_count += 1
+                if arr[j] < arr[j - 1]:
                     arr[j], arr[j - 1] = arr[j - 1], arr[j]
                     swap_count += 1
 

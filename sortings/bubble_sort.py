@@ -18,11 +18,8 @@ class BubbleSort:
         comp_count = 0
         swap_count = 0
 
-        i = 1
-        for i in range(len(arr) - 1):
-            comp_count += 1
-
-            for j in range(len(arr) - 1, i + 1, -1):
+        for i in range(1, len(arr) - 1):
+            for j in range(len(arr) - 1, i, -1):
                 comp_count += 1
 
                 if arr[j - 1] > arr[j]:

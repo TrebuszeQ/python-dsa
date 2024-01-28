@@ -43,8 +43,8 @@ class SelectionSort:
             mini = i
 
             for j in range(i, len(arr)):
+                comp_count += 1
                 if arr[mini] > arr[j]:
-                    comp_count += 1
                     mini = j
 
             arr[i], arr[mini] = arr[mini], arr[i]
