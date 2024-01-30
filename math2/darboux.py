@@ -1,6 +1,6 @@
 from cli import Cli
 
-
+# twierdzenie o przyjmowaniu wartosci posrednich Darboux
 class Darboux:
 
     # funkcja f(x) jest ciągła w przedziale <a,b>
@@ -16,7 +16,27 @@ class Darboux:
         return Darboux._find_zero_case_1(a)
 
     @staticmethod
-    def _find_zero(a, b, d, c):
+    def _find_zero(a, b, d):
+        try:
+            x = (a + b) / 2
+            f = x * x * x - x * x - x + 2
+
+            if abs(f) <= d:
+                print(x, " z dokladnoscia ", d)
+                return True
+
+            elif f * (a * a * a - a * a - a + 2) > 0:
+                return Darboux._find_zero(a, x, d)
+
+            else:
+                print("Case 3")
+                return Darboux._find_zero(x, b, d)
+
+        except RecursionError:
+            return False
+
+    @staticmethod
+    def _find_zero_count(a, b, d, c):
         c += 1
         try:
             x = (a + b) / 2
@@ -27,11 +47,11 @@ class Darboux:
                 return True, c
 
             elif f * (a * a * a - a * a - a + 2) > 0:
-                return Darboux._find_zero(a, x, d, c)
+                return Darboux._find_zero_count(a, x, d, c)
 
             else:
                 print("Case 3")
-                return Darboux._find_zero(x, b, d, c)
+                return Darboux._find_zero_count(x, b, d, c)
 
         except RecursionError:
             return False, c
@@ -42,26 +62,34 @@ class Darboux:
         return i + c
 
     @staticmethod
-    def darboux():
-        c = 0
-        i = 0
+    def _take_point(a, b):
+        d = 0
+        while d < a or d > b:
+            d = Cli.try_read_input_float(f"Podaj punkt w przedziale <{a}, {b}>")
 
-        # here
-        res = False
+            if d < a or d > b:
+                print(f"Punkt powinien znajdowac się w przedziale <{a}, {b}>.")
 
-        while not res:
-            a, b = Cli.read_range_float("Podaj wartosc dolna przedzialu [typu float].\n", "Podaj wartosc gorna przedzialu [typu float].\n")
-            d = Cli.try_read_input_float("Podaj dokladnosc [typu float].\n")
+        return d
 
-            res, c = Darboux._find_zero(a, b, d, c)
-            i += 1
+    @staticmethod
+    def _calculate_func(a, b):
+        x = (a + b) / 2
+        fx = x * x * x - x * x - x + 2
+        fa = a * a * a - a * a + a + 2
+        fb = b * b * b - b * b - b + 2
 
-            if res is False:
-                print("Funkcja nie ma miejsc zerowych w przedziale.\n")
+        return fx, fa, fb
 
-            all_c = Darboux._get_count(i, c)
+    @staticmethod
+    def _darboux():
+        a, b = Cli.read_interval_closed_float("Podaj lewostronna granice przedzialu.", "Podaj prawostronna granice przedzialu.")
+        d = Darboux._take_point(a, b)
 
-        return all_c
+        fx, fa, fb = Darboux._calculate_func(a, b)
 
-
+        if fx == d:
+            pass
+        
+        elif fa < d < fb or fa > d > fb:
 

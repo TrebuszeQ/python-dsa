@@ -74,7 +74,7 @@ class Cli:
         return values
 
     @staticmethod
-    def read_range_float(msg1, msg2):
+    def read_interval_open_float(msg1, msg2):
         a = 0
         b = 0
 
@@ -83,7 +83,21 @@ class Cli:
             b = Cli.try_read_input_float(msg2)
 
             if a >= b:
-                print("a nie moze byc wieksze, badz rowne b.")
+                print("a musi byc wieksze od b.")
+
+        return a, b
+
+    @staticmethod
+    def read_interval_closed_float(msg1, msg2):
+        a = 0
+        b = 0
+
+        while a > b:
+            a = Cli.try_read_input_float(msg1)
+            b = Cli.try_read_input_float(msg2)
+
+            if a > b:
+                print("a musi byc mniejsze badz rowne b.")
 
         return a, b
 

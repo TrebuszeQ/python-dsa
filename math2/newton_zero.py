@@ -12,7 +12,7 @@ class NewtonZero:
 
     @staticmethod
     def newton():
-        a, b = Cli.read_range_float("Wprowadz granice dolna przedzialu [typu float].\n",
+        a, b = Cli.read_interval_open_float("Wprowadz granice dolna przedzialu [typu float].\n",
                                     "Wprowadz granice gorna przedzialu [typu float].\n")
         i = 1
         x = a
