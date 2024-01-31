@@ -80,6 +80,7 @@ class Cli:
 
         while a >= b:
             a = Cli.try_read_input_float(msg1)
+            print()
             b = Cli.try_read_input_float(msg2)
 
             if a >= b:
@@ -89,7 +90,7 @@ class Cli:
 
     @staticmethod
     def read_interval_closed_float(msg1, msg2):
-        a = 0
+        a = 3
         b = 0
 
         while a > b:
