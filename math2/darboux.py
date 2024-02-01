@@ -1,5 +1,6 @@
 from cli import Cli
 
+
 # twierdzenie o przyjmowaniu wartosci posrednich Darboux
 class Darboux:
 
@@ -8,29 +9,21 @@ class Darboux:
     # funkcja przyjmuje różne znaki na końcach przedziału: f(a)*f(b)<0
 
     @staticmethod
-    def _find_zero_case_2(b):
-        return Darboux._find_zero_case_2(b)
+    def _bisection_recursive(a, b, d):
 
-    @staticmethod
-    def _find_zero_case_1(a):
-        return Darboux._find_zero_case_1(a)
-
-    @staticmethod
-    def _find_zero(a, b, d):
         try:
             x = (a + b) / 2
-            f = x * x * x - x * x - x + 2
+            f = Darboux._calculate_func(x)
 
             if abs(f) <= d:
-                print(x, " z dokladnoscia ", d)
+                print(f"Miejsce zerowe funkcji dazy do {x} z dokladnoscia do {d}.")
                 return True
 
-            elif f * (a * a * a - a * a - a + 2) > 0:
-                return Darboux._find_zero(a, x, d)
+            elif f * Darboux._calculate_func(a) > 0:
+                return Darboux._bisection_recursive(a, x, d)
 
             else:
-                print("Case 3")
-                return Darboux._find_zero(x, b, d)
+                return Darboux._bisection_recursive(x, b, d)
 
         except RecursionError:
             return False
@@ -38,19 +31,19 @@ class Darboux:
     @staticmethod
     def _find_zero_count(a, b, d, c):
         c += 1
+
         try:
             x = (a + b) / 2
-            f = x * x * x - x * x - x + 2
+            f = Darboux._calculate_func(x)
 
             if abs(f) <= d:
-                print(x, " z dokladnoscia ", d)
+                print(f"Miejsce zerowe funkcji dazy do {x} z dokladnoscia do {d}.")
                 return True, c
 
-            elif f * (a * a * a - a * a - a + 2) > 0:
+            elif f * Darboux._calculate_func(a) > 0:
                 return Darboux._find_zero_count(a, x, d, c)
 
             else:
-                print("Case 3")
                 return Darboux._find_zero_count(x, b, d, c)
 
         except RecursionError:
@@ -75,22 +68,42 @@ class Darboux:
         return d
 
     @staticmethod
-    def _darboux():
-        a, b = Cli.read_interval_closed_float("Podaj lewostronna granice przedzialu.\n", "Podaj prawostronna granice przedzialu.\n")
-        d = Darboux._take_point(a, b)
-
+    def _has_darboux_point(a, b):
         if a == b:
             return False
 
-        fx = Darboux._calculate_func((a + b)/2)
         fa = Darboux._calculate_func(a)
         fb = Darboux._calculate_func(b)
 
-        if fx == d:
-            return fx
+        if fa == 0 or fb == 0:
+            return True
 
-        elif fa < d < fb or fa > d > fb:
+        if fa * fb < 0:
             return True
 
         else:
             return False
+
+    @staticmethod
+    def darboux():
+        a, b = Cli.read_interval_closed_float("Podaj lewostronna granice przedzialu.\n",
+                                              "Podaj prawostronna granice przedzialu.\n")
+        d = Darboux._take_point(a, b)
+        Darboux._bisection_recursive(a, b, d)
+        return False
+
+    # @staticmethod
+    # def darboux():
+    #     a, b = Cli.read_interval_closed_float("Podaj lewostronna granice przedzialu.\n",
+    #                                           "Podaj prawostronna granice przedzialu.\n")
+    #
+    #     i = a
+    #     while i == b:
+    #         if Darboux._has_darboux_point(a, b):
+    #             fc = Darboux._calculate_func(i)
+    #             if fc == 0:
+    #                 return True
+    #
+    #             i += 0.001
+    #
+    #     return False
