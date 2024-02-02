@@ -40,6 +40,15 @@ class Cli:
                 print("Wprowadzono nieprawidlowa wartosc.\n")
 
     @staticmethod
+    def try_read_input_string(message):
+        value: str = None
+
+        while value is None or len(value) == 0:
+            value = input(message)
+
+        return value
+
+    @staticmethod
     # probuje odczytac wejscie float
     def try_read_input_float(message):
         value: str

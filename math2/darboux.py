@@ -16,7 +16,7 @@ class Darboux:
             f = Darboux._calculate_func(x)
 
             if abs(f) <= d:
-                print(f"Miejsce zerowe funkcji dazy do {x} z dokladnoscia do {d}.")
+                print(f"Miejsce zerowe funkcji dazy do {x} z dokladnoscia do {d}.\n")
                 return True
 
             elif f * Darboux._calculate_func(a) > 0:
@@ -37,7 +37,7 @@ class Darboux:
             f = Darboux._calculate_func(x)
 
             if abs(f) <= d:
-                print(f"Miejsce zerowe funkcji dazy do {x} z dokladnoscia do {d}.")
+                print(f"Miejsce zerowe funkcji dazy do {x} z dokladnoscia do {d}.\n")
                 return True, c
 
             elif f * Darboux._calculate_func(a) > 0:
@@ -60,10 +60,10 @@ class Darboux:
 
     @staticmethod
     def _take_point(a, b):
-        d = Cli.try_read_input_float(f"Podaj punkt w przedziale <{a}, {b}>")
+        d = Cli.try_read_input_float(f"Podaj punkt w przedziale <{a}, {b}>.\n")
 
         while d < a or d > b:
-            d = Cli.try_read_input_float(f"Podaj punkt w przedziale <{a}, {b}>")
+            d = Cli.try_read_input_float(f"Podaj punkt w przedziale <{a}, {b}>.\n")
 
         return d
 

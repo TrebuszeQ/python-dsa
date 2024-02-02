@@ -22,9 +22,6 @@ class Stack:
         if self.empty():
             self.arr = [multi]
 
-
-
-
     def pop(self):
         pass
 
