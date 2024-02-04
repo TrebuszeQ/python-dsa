@@ -1,39 +1,42 @@
 # Robert Sedgewick, Kevin Wayne Algorytmy IV edycja pl, strona 144.
 # stos oparty o liste
 class Stack:
-    def __init__(self, lis):
-        if lis is None:
-            self.arr = None
+    def __init__(self, stack):
+        if stack is None:
+            self._stack = []
 
         else:
-            self.arr = lis
+            self._stack = stack
+
+    def __repr__(self):
+        return f'(Stack({self._stack})'
 
     def push(self, elem):
-        if self.empty():
-            self.arr = [elem]
+        if type(self._stack) is list:
+            self._stack.append(elem)
 
-        else:
-            self.arr[self.arr.__len__()] = elem
+        elif type(self._stack) is tuple:
+            self._stack[len(self._stack)] = elem
 
-        return self.arr
+        return self._stack
 
-    # here
-    def _push_multiple(self, multi):
-        if self.empty():
-            self.arr = [multi]
+    # # here
+    # def _push_multiple(self, multi):
+    #     if self.empty():
+    #         self._stack = [multi]
 
     def pop(self):
         pass
 
     def empty(self):
-        if self.arr is None:
+        if self._stack is None:
             return True
 
         else:
             return False
 
     def size(self):
-        pass
+        return len(self._stack)
 
     def top(self):
         pass
