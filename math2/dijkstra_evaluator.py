@@ -9,45 +9,48 @@ class DijkstraEvaluator:
     # (2 * 3 + (1 + 2) / 2)
 
     @staticmethod
-    def _multiply(value, value2):
-        return value * value2
-
-    @staticmethod
-    def _add(value, value2):
-        return value + value2
-
-    @staticmethod
-    def _subtract(value, value2):
-        return value - value2
-
-    @staticmethod
-    def _divide(value, value2):
-        return value / value2
-
-    @staticmethod
-    def _mod(value, value2):
-        return value % value2
-
-    @staticmethod
-    def _sqrt(value):
-        return value ** 0.5
-
-    @staticmethod
-    def _pow(value, value2):
-        return value ** value2
-
-    @staticmethod
     def _evaluate(operators, values):
-        if operators.size() == values.size():
-            op = operators.pop()
-            val2 = values.pop()
-            val2 = values.pop()
+
+        eval_values = Stack(())
+
+        if len(operators) > len(values):
+            for i in range(len(values)):
+                op = operators[i]
+
+                match op:
+                    case '-':
+                        eval_values.push(values[i] - values[i + 1])
+
+                    case '+':
+                        eval_values.push(values[i] + values[i + 1])
+
+                    case '*':
+                        eval_values.push(values[i] * values[i + 1])
+
+                    case '/':
+                        eval_values.push(values[i] / values[i + 1])
+
+                    case ':':
+                        eval_values.push(values[i] / values[i + 1])
+
+                    case '%':
+                        eval_values.push(values[i] % values[i + 1])
+
+                    case 'sqrt':
+                        eval_values.push(values[i] ** values[i + 1])
+
+                    case '^':
+                        eval_values.push(math.pow(values[i], values[i + 1]))
+
+        elif len(values) > len(operators):
+            pass
+
+        else:
+            pass
 
     @staticmethod
     def _trim_empty(text):
-        text.trim
-    #   here
-
+        return text.replace(' ', '')
 
     @staticmethod
     def _traverse():
@@ -55,10 +58,9 @@ class DijkstraEvaluator:
         operators = Stack([])
         values = Stack([])
 
-        expression = Cli.try_read_input_string("Podaj wyrazenie arytmetyczne.\n")
+        expression = DijkstraEvaluator._trim_empty(Cli.try_read_input_string("Podaj wyrazenie arytmetyczne.\n"))
 
         i = 0
-        current = 0
         active = True
 
         for char in expression:
@@ -71,8 +73,6 @@ class DijkstraEvaluator:
 
                 case '-':
                     operators.push('-')
-                    if active is True:
-
 
                 case '+':
                     operators.push('+')
@@ -95,12 +95,8 @@ class DijkstraEvaluator:
                 case '^':
                     operators.push('^')
 
-                case ' ':
-                    pass
-
                 case _:
                     if char.isalnum():
-                        current = char
                         values.push(char)
 
             i += 1
@@ -108,6 +104,33 @@ class DijkstraEvaluator:
         print(operators)
         print(values)
 
-
+    # @staticmethod
+    # def _multiply(value, value2):
+    #     return value * value2
+    #
+    # @staticmethod
+    # def _add(value, value2):
+    #     return value + value2
+    #
+    # @staticmethod
+    # def _subtract(value, value2):
+    #     return value - value2
+    #
+    # @staticmethod
+    # def _divide(value, value2):
+    #     return value / value2
+    #
+    # @staticmethod
+    # def _mod(value, value2):
+    #     return value % value2
+    #
+    # @staticmethod
+    # def _sqrt(value):
+    #     return value ** 0.5
+    #
+    # @staticmethod
+    # def _pow(value, value2):
+    #     return value ** value2
 if __name__ == '__main__':
     DijkstraEvaluator._traverse()
+

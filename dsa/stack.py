@@ -26,7 +26,7 @@ class Stack:
     #         self._stack = [multi]
 
     def pop(self):
-        pass
+        return self._stack.__pop__()
 
     def empty(self):
         if self._stack is None:
