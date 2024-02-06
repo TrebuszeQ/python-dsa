@@ -9,44 +9,79 @@ class DijkstraEvaluator:
     # (2 * 3 + (1 + 2) / 2)
 
     @staticmethod
-    def _evaluate(operators, values):
+    def _evaluate(operation, val1, val2):
+        operations = (
+            {"name": "add", "operation": lambda: val1 + val2},
+            {"name": "sub", "operation": lambda: val1 - val2},
+            {"name": "mul", "operation": lambda: val1 * val2},
+            {"name": "div", "operation": lambda: val1 / val2},
+            {"name": "mod", "operation": lambda: val1 % val2},
+            {"name": "sqrt", "operation": lambda: val1 ** (val2/2)},
+            {"name": "pow", "operation": lambda: val1 ** val2},
+        )
 
-        eval_values = Stack(())
+        return 
 
-        if len(operators) > len(values):
-            for i in range(len(values)):
-                op = operators[i]
+    @staticmethod
+    def _eval_matcher2(char, val1, val2, callback):
 
-                match op:
-                    case '-':
-                        eval_values.push(values[i] - values[i + 1])
+        match char:
+            case '-':
+                return callback(callbackval1, val2)
 
-                    case '+':
-                        eval_values.push(values[i] + values[i + 1])
+            case '+':
+                return val1 + val2
 
-                    case '*':
-                        eval_values.push(values[i] * values[i + 1])
+            case '*':
+                return val1 * val2
 
-                    case '/':
-                        eval_values.push(values[i] / values[i + 1])
+            case '/':
+                return val1 / val2
 
-                    case ':':
-                        eval_values.push(values[i] / values[i + 1])
+            case ':':
+                return val1 / val2
 
-                    case '%':
-                        eval_values.push(values[i] % values[i + 1])
+            case '%':
+                return val1 % val2
 
-                    case 'sqrt':
-                        eval_values.push(values[i] ** values[i + 1])
+            case 'sqrt':
+                return val1 ** (val2 / 2)
 
-                    case '^':
-                        eval_values.push(math.pow(values[i], values[i + 1]))
+            case '^':
+                return val1 ** val2
 
-        elif len(values) > len(operators):
-            pass
+            case _:
+                return None
 
-        else:
-            pass
+    @staticmethod
+    def _eval_matcher(char, val1, val2):
+        match char:
+            case '-':
+                return val1 - val2
+
+            case '+':
+                return val1 + val2
+
+            case '*':
+                return val1 * val2
+
+            case '/':
+                return val1 / val2
+
+            case ':':
+                return val1 / val2
+
+            case '%':
+                return val1 % val2
+
+            case 'sqrt':
+                return val1 ** (val2 / 2)
+
+            case '^':
+                return val1 ** val2
+
+            case _:
+                return None
 
     @staticmethod
     def _trim_empty(text):
@@ -60,8 +95,9 @@ class DijkstraEvaluator:
 
         expression = DijkstraEvaluator._trim_empty(Cli.try_read_input_string("Podaj wyrazenie arytmetyczne.\n"))
 
+        result = 0
         i = 0
-        active = True
+        op_active = True
 
         for char in expression:
             match char:
@@ -79,6 +115,7 @@ class DijkstraEvaluator:
 
                 case '*':
                     operators.push('*')
+                    op_active = True
 
                 case '/':
                     operators.push('/')
@@ -96,7 +133,12 @@ class DijkstraEvaluator:
                     operators.push('^')
 
                 case _:
-                    if char.isalnum():
+                    if char.isalnum() and op_active is True:
+                        op = operators.pop()
+                        result = values.pop() * values.pop()
+                        values.push(result)
+
+                    else:
                         values.push(char)
 
             i += 1
