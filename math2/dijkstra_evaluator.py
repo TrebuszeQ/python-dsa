@@ -9,79 +9,22 @@ class DijkstraEvaluator:
     # (2 * 3 + (1 + 2) / 2)
 
     @staticmethod
-    def _evaluate(operation, val1, val2):
+    def _evaluate(operator, val1, val2):
         operations = (
-            {"name": "add", "operation": lambda: val1 + val2},
-            {"name": "sub", "operation": lambda: val1 - val2},
-            {"name": "mul", "operation": lambda: val1 * val2},
-            {"name": "div", "operation": lambda: val1 / val2},
-            {"name": "mod", "operation": lambda: val1 % val2},
-            {"name": "sqrt", "operation": lambda: val1 ** (val2/2)},
-            {"name": "pow", "operation": lambda: val1 ** val2},
+            {"name": "+", "operation": val1 + val2},
+            {"name": "-", "operation": val1 - val2},
+            {"name": "*", "operation": val1 * val2},
+            {"name": "/", "operation": val1 / val2},
+            {"name": ":", "operation": val1 / val2},
+            {"name": "%", "operation": val1 % val2},
+            {"name": "sqrt", "operation": val1 ** (val2/2)},
+            {"name": "^", "operation": val1 ** val2},
+            {"name": "pow", "operation": val1 ** val2},
         )
 
-        return 
-
-    @staticmethod
-    def _eval_matcher2(char, val1, val2, callback):
-
-        match char:
-            case '-':
-                return callback(callbackval1, val2)
-
-            case '+':
-                return val1 + val2
-
-            case '*':
-                return val1 * val2
-
-            case '/':
-                return val1 / val2
-
-            case ':':
-                return val1 / val2
-
-            case '%':
-                return val1 % val2
-
-            case 'sqrt':
-                return val1 ** (val2 / 2)
-
-            case '^':
-                return val1 ** val2
-
-            case _:
-                return None
-
-    @staticmethod
-    def _eval_matcher(char, val1, val2):
-        match char:
-            case '-':
-                return val1 - val2
-
-            case '+':
-                return val1 + val2
-
-            case '*':
-                return val1 * val2
-
-            case '/':
-                return val1 / val2
-
-            case ':':
-                return val1 / val2
-
-            case '%':
-                return val1 % val2
-
-            case 'sqrt':
-                return val1 ** (val2 / 2)
-
-            case '^':
-                return val1 ** val2
-
-            case _:
-                return None
+        for op in operations:
+            if op["name"] == operator:
+                return op
 
     @staticmethod
     def _trim_empty(text):
@@ -89,15 +32,12 @@ class DijkstraEvaluator:
 
     @staticmethod
     def _traverse():
-        print("Program oblicza wyrazenie arytmetyczne w nawiasach.\n")
         operators = Stack([])
         values = Stack([])
 
         expression = DijkstraEvaluator._trim_empty(Cli.try_read_input_string("Podaj wyrazenie arytmetyczne.\n"))
 
         result = 0
-        i = 0
-        op_active = True
 
         for char in expression:
             match char:
@@ -105,74 +45,30 @@ class DijkstraEvaluator:
                     operators.push('(')
 
                 case ')':
-                    operators.push(')')
+                    while operators.peek() != '(':
+                        value2 = values.pop()
+                        value1 = values.pop()
+                        result = DijkstraEvaluator._evaluate(operators.pop(), value1, value2)
 
-                case '-':
-                    operators.push('-')
+                    operators.pop()
+                    values.push(result)
 
-                case '+':
-                    operators.push('+')
-
-                case '*':
-                    operators.push('*')
-                    op_active = True
-
-                case '/':
-                    operators.push('/')
-
-                case ':':
-                    operators.push(':')
-
-                case '%':
-                    operators.push('%')
-
-                case 'sqrt':
-                    operators.push('sqrt')
-
-                case '^':
-                    operators.push('^')
+                case '-' | '+' | '*' | '/' | ':' | '%' | 'sqrt' | '^':
+                    operators.push(char)
 
                 case _:
-                    if char.isalnum() and op_active is True:
-                        op = operators.pop()
-                        result = values.pop() * values.pop()
-                        values.push(result)
-
-                    else:
+                    if char.isalnum():
                         values.push(char)
-
-            i += 1
 
         print(operators)
         print(values)
+        return result
 
-    # @staticmethod
-    # def _multiply(value, value2):
-    #     return value * value2
-    #
-    # @staticmethod
-    # def _add(value, value2):
-    #     return value + value2
-    #
-    # @staticmethod
-    # def _subtract(value, value2):
-    #     return value - value2
-    #
-    # @staticmethod
-    # def _divide(value, value2):
-    #     return value / value2
-    #
-    # @staticmethod
-    # def _mod(value, value2):
-    #     return value % value2
-    #
-    # @staticmethod
-    # def _sqrt(value):
-    #     return value ** 0.5
-    #
-    # @staticmethod
-    # def _pow(value, value2):
-    #     return value ** value2
+    @staticmethod
+    def main():
+        print("Program oblicza wyrazenie arytmetyczne w nawiasach.\n")
+
+
 if __name__ == '__main__':
     DijkstraEvaluator._traverse()
 

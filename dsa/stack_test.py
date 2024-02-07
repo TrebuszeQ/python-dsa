@@ -16,9 +16,10 @@ class MyTestCase(unittest.TestCase):
         stack = Stack(None)
         self.assertEqual([4], stack.push(4))
 
-    def test_push_valid_on_full(self):
+    def test_push_valid_arr_full(self):
         stack = Stack([1, 2, 3])
-        self.assertEqual([1, 2, 3], stack.push(1))
+        self.assertEqual([1, 2, 3, 1], stack.push(1))
+
 
 if __name__ == '__main__':
     unittest.main()

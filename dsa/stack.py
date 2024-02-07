@@ -2,7 +2,10 @@
 # stos oparty o liste
 class Stack:
     def __init__(self, stack):
-        if stack is None:
+        if type(stack) is list:
+            Stack._copy_list(self, stack)
+
+        elif stack is None:
             self._stack = []
 
         else:
@@ -10,6 +13,13 @@ class Stack:
 
     def __repr__(self):
         return f'(Stack({self._stack})'
+
+    def _copy_list(self, lis):
+        self._stack = []
+        for item in lis:
+            self._stack.append(item)
+
+        return self._stack
 
     def push(self, elem):
         if type(self._stack) is list:
@@ -26,10 +36,10 @@ class Stack:
     #         self._stack = [multi]
 
     def pop(self):
-        return self._stack.__pop__()
+        return self._stack.pop()
 
     def empty(self):
-        if self._stack is None:
+        if self._stack is None or len(self._stack) == 0:
             return True
 
         else:
@@ -39,7 +49,7 @@ class Stack:
         return len(self._stack)
 
     def top(self):
-        pass
+        return self._stack[len(self._stack)-1]
 
     def peek(self):
-        pass
+        return self._stack[0]
