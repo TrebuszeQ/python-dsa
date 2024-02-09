@@ -46,11 +46,13 @@ class DijkstraEvaluator:
         operators = Stack([])
         values = Stack([])
 
-        result = 0
-        precedense = False
+        priority = False
         for char in expression:
             match char:
                 case '(':
+                    if priority is True:
+                        priority = False
+
                     operators.push('(')
 
                 case ')':
@@ -62,25 +64,28 @@ class DijkstraEvaluator:
                     operators.pop()
 
                 case '*' | '/' | ':' | '%' | 'sqrt' | '^':
-                    precedense = True
+                    priority = True
                     operators.push(char)
 
                 case '-' | '+':
                     operators.push(char)
 
                 case _:
-                    if char.isalnum() and precedense is True:
-                        values.push(DijkstraEvaluator._evaluate(operators.pop(), values.pop(), DijkstraEvaluator._char_to_number(char)))
-                        precedense = False
+                    if char.isdigit() and priority is True:
+                        values.push(
+                            DijkstraEvaluator._evaluate(operators.pop(), values.pop(),
+                                                        DijkstraEvaluator._char_to_number(char)))
+                        priority = False
 
-                    if char.isalnum() and precedense is not True:
+                    elif char.isdigit() and priority is False:
                         values.push(DijkstraEvaluator._char_to_number(char))
 
-        return result
+        return values.pop()
 
     @staticmethod
     def main():
         print("Program oblicza wyrazenie arytmetyczne w nawiasach.\n")
+        print("Program wymaga domknięcia nawiasów.\n")
         return DijkstraEvaluator._traverse(DijkstraEvaluator._trim_whitespace(DijkstraEvaluator._take_expression()))
 
 
