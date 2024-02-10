@@ -1,5 +1,3 @@
-# Robert Sedgewick, Kevin Wayne Algorytmy IV edycja pl, strona 144.
-# stos oparty o liste
 class Stack:
     def __init__(self, stack):
         if type(stack) is list:

@@ -27,6 +27,27 @@ class DijkstraEvaluator:
                 return op["operation"]
 
     @staticmethod
+    def _count_parentheses(text):
+        ope = 0
+        close = 0
+
+        for char in text:
+            if char == "(":
+                ope += 1
+
+            elif char == ")":
+                close += 1
+
+        return ope, close
+
+    @staticmethod
+    def _check_parentheses_parity(ope, close):
+        if ope == close:
+            return True
+
+        return False
+
+    @staticmethod
     def _trim_whitespace(text):
         return text.replace(' ', '')
 
@@ -85,8 +106,16 @@ class DijkstraEvaluator:
     @staticmethod
     def main():
         print("Program oblicza wyrazenie arytmetyczne w nawiasach.\n")
-        print("Program wymaga domknięcia nawiasów.\n")
-        return DijkstraEvaluator._traverse(DijkstraEvaluator._trim_whitespace(DijkstraEvaluator._take_expression()))
+        print("Program wymaga domkniecia nawiasow.\n")
+        expr = DijkstraEvaluator._trim_whitespace(DijkstraEvaluator._take_expression())
+        ope, close = DijkstraEvaluator._count_parentheses(expr)
+
+        if DijkstraEvaluator._check_parentheses_parity(ope, close):
+            return DijkstraEvaluator._traverse(expr)
+
+        else:
+            print("Program wymaga parzystej ilosci nawiasow.\n")
+            return False
 
 
 if __name__ == '__main__':
