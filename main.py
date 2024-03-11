@@ -1,9 +1,9 @@
 from cli import Cli
-from dsa.dsa import Dsa
-from sortings.sortings import Sortings
-from math2.math2 import Math2
+from src.dsa.dsa import Dsa
+from src.sortings.sortings import Sortings
+from src.math2.math2 import Math2
 from data.dates import Dates
-from other.other import Other
+from src.other.other import Other
 
 if __name__ == '__main__':
     Cli.menu([
