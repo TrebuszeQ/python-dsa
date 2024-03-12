@@ -1,7 +1,7 @@
 from cli import Cli
 
 
-class Other:
+class Math2:
     @staticmethod
     def menu():
         pass
