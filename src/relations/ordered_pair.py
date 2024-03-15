@@ -2,11 +2,11 @@ from dataclasses import dataclass
 
 
 @dataclass(repr=True)
-class OrderedPair:
+class OrderedPair(list):
 
     @property
     def predecessor(self):
-        return self._successor
+        return self._predecessor
 
     @property
     def successor(self):
@@ -20,29 +20,22 @@ class OrderedPair:
     def collection(self):
         return self._collection
 
-    @predecessor.setter
-    def predecessor(self, value):
-        self._predecessor = value
-
-    @successor.setter
-    def successor(self, value):
-        self._successor = value
-
-    # here
-    @collection.setter
-    def collection(self, value):
-        while value != 0:
-            self._collection[value - 1] = value
-            value -= 1
-
     def __init__(self, predecessor, successor):
-        self._collection = successor
+        super().__init__()
+
         if successor < predecessor:
-            self._successor = predecessor
-            self._predecessor = successor
+            self._successor, self._predecessor = predecessor, successor
 
-        else:
-            self._successor = successor
-            self._predecessor = predecessor
+        self._successor, self._predecessor = successor, predecessor
 
+        self._collection = self.__populate_collection()
 
+    def __populate_collection(self):
+        i = self.predecessor
+        collection = []
+
+        while True:
+            collection.append(i)
+            i += 1
+            if collection.__len__() > self._successor - self._predecessor:
+                return collection
