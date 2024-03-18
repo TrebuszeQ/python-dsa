@@ -22,25 +22,29 @@ class CartesianProduct2:
         pairs = self._ordered_pairs
         n = pairs.__len__()
 
-       # cords = (i, j, k+1)
-       #
-       #  cords2 = (i, j, k)
-       #  cords3 = (i + 3, j, k)
-       #  cords4 = (i + 1)
+        leading_pair = pairs[0].collection
+        # i++
+        for num in leading_pair:
+            cord = (num)
+            # j - next pair counter
+            j = 1
+            # k - in next pair counter
+            k = 0
 
+            # j++
+            next_collection = pairs[j].collection
+            while j != n and j != next_collection.len:
+                cord.__append__(pairs[j].collection[k])
+                j += 1
 
-        for i in range(pairs.len - 1):
-            leading_pair = pairs[i]
-            npair = pairs[n]
+            # k++
+            last_collection = pairs[n].collection
+            while j == n and k != last_collection.len:
+                cord.__append__(last_collection[k])
+                k += 1
 
-            while n != 0 and n != i:
-                j = 0
-                cords.__add__(leading_pair[j])
-
-                for num in npair:
-                    cords.__add__(leading_pair)
-                    leading_pair[j]
-                n -= 1
+            k = 0
+            cords.__add__(cord)
 
         return result
 
