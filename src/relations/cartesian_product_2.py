@@ -18,14 +18,14 @@ class CartesianProduct2:
 
     def __combine_collections(self):
         result = []
-        cords = ()
+        cords = []
         pairs = self._ordered_pairs
         n = pairs.__len__()
 
         leading_pair = pairs[0].collection
         # i++
         for num in leading_pair:
-            cord = (num)
+            cord = [num]
             # j - next pair counter
             j = 1
             # k - in next pair counter
@@ -33,27 +33,48 @@ class CartesianProduct2:
 
             # j++
             next_collection = pairs[j].collection
-            while j != n and j != next_collection.len:
-                cord.__append__(pairs[j].collection[k])
+            while j != n - 1 and j != next_collection.__len__():
+                cord.append(pairs[j].collection[k])
                 j += 1
+                if j == next_collection.__len__():
+                    j = 0
 
             # k++
-            last_collection = pairs[n].collection
-            while j == n and k != last_collection.len:
-                cord.__append__(last_collection[k])
+            last_collection = pairs[n - 1].collection
+            while j == n - 1 and k != last_collection.__len__():
+                cord.append(last_collection[k])
                 k += 1
+                if j == last_collection.__len__():
+                    k = 0
 
-            k = 0
-            cords.__add__(cord)
+            cords.append(cord)
 
         return result
+    def __combine_collections(self):
+        cords = []
+        pairs = self._ordered_pairs
+        n = pairs.__len__()
+        counters = []
+        for pair in pairs:
+            counters.append(0)
+
+        for pair in pairs:
+            lead_counter = counters[0]
+            last_counter = counters[counters.__len__() - 1]
+
+            lead_node = pairs[0]
+            lead_collection = lead_node.collection
+
+            last_node = pairs[last_counter]
+
+            cords.append(lead_collection[lead_counter])
+            lead_counter += 1
+            counters[lead_counter] += 1
+
+            if lead_node == last_node:
+                lead_counter = 0
 
 
-    # przechodzi przez wszystkie pary,
-    # dodaje pierwsza liczbe z pair._collection do cords
-    # dochodzi do ostatniej pary
-    # dla kazdej liczby z drugiej pary dodaje cords i = 0 j++ i = 1
-    # 
 
-
+        return cords
 
