@@ -3,7 +3,7 @@ from src.relations.ordered_pair import OrderedPair
 
 
 @dataclass(repr=True)
-class CartesianProduct:
+class CartesianProductOfPair:
     @property
     def pair1(self):
         return self._pair1
