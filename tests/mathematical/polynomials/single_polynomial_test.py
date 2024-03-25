@@ -10,9 +10,13 @@ class MyTestCase(unittest.TestCase):
         print(poly.poly_str)
         self.assertEqual(-24.6159, poly.y)
 
+    def test_solve(self):
+        polynomial_dct: {float: float} = {-1.0: 3.0, 7.0: 2.0, 1.0: 1.0}
+        self.assertEqual(-24.6159, SinglePolynomial(polynomial_dct).solve)
+
     def test_horner_method(self):
-        polynomial_dct: {float: float} = {-1.0: 3.0, 7: 2.0, 1: 1.0}
-        self.assertEqual(-24.6159, SinglePolynomial(polynomial_dct)._horner_method(-3, 3))
+        polynomial_dct: {float: float} = {1.0: 4.0, 3.0: 3.0, 1.0: 1.0, -3: 0}
+        self.assertEqual(-2, SinglePolynomial())
 
 
 if __name__ == '__main__':

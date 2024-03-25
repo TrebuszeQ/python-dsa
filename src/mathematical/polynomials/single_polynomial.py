@@ -22,19 +22,19 @@ class SinglePolynomial:
         self._y = p
 
     @property
-    def poly(self):
+    def solve(self):
         return self._poly
 
-    @poly.setter
-    def poly(self, poly):
+    @solve.setter
+    def solve(self, poly):
         self._poly = poly
 
     # here
     @property
     def poly_str(self):
-        return self.poly.__str__(self.poly)
+        return self.solve.__str__(self.solve)
 
-    def __init__(self, polynomial: {float: float}):
+    def __init__(self, polynomial):
         self._poly = polynomial
         self._n = self._set_max_coefficient()
         self._y = None
@@ -51,10 +51,11 @@ class SinglePolynomial:
     # P = a0
     # P = Px + ai, i = 1 ... n
     # here2
-    def _horner_method(self, x0, i):
-        if i != self.n:
-            print(self._poly[i])
-            self._poly = self._poly * x0 + self._poly[i]
+    def _horner_method(self, px, n, a):
+        for i in range(self.n):
+            px = self._poly.solve(a)
+            p = px + a
+
 
         return self._horner_method(x0, i + 1)
 

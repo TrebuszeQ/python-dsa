@@ -13,7 +13,7 @@ class OrderedPair(list):
         return self._successor
 
     @property
-    def ordered_pair(self):
+    def pair(self):
         return [self._predecessor, self._successor]
 
     @property
