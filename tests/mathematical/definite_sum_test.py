@@ -1,5 +1,5 @@
 import unittest
-from src.mathematical.definite_sum import DefiniteSum
+from app.mathematical.definite_sum import DefiniteSum
 
 
 class DefiniteSumTest(unittest.TestCase):

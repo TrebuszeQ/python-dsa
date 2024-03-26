@@ -1,5 +1,5 @@
 from cli import Cli
-from src.dsa.stack_initable import Stack
+from app.dsa.stack_initable import Stack
 
 
 # Robert Sedgewick, Kevin Wayne Algorytmy IV edycja pl, strona 141.

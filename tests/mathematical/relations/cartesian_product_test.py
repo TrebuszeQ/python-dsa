@@ -1,6 +1,6 @@
 import unittest
-from src.mathematical.relations.ordered_pair import OrderedPair
-from src.mathematical.relations import CartesianProduct
+from app.mathematical.relations.ordered_pair import OrderedPair
+from app.mathematical.relations import CartesianProduct
 
 
 class CartesianProductTest(unittest.TestCase):

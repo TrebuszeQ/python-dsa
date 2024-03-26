@@ -1,10 +1,10 @@
 from cli import Cli
-from src.dsa.random_int_array import RandomIntArray
-from src.sortings.bubble_sort import BubbleSort
-from src.sortings.insertion_sort import InsertionSort
-from src.sortings.quick_sort import QuickSort
+from app.dsa.random_int_array import RandomIntArray
+from app.sortings.bubble_sort import BubbleSort
+from app.sortings.insertion_sort import InsertionSort
+from app.sortings.quick_sort import QuickSort
 
-from src.sortings.selection_sort import SelectionSort
+from app.sortings.selection_sort import SelectionSort
 
 
 class Sortings:

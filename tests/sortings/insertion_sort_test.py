@@ -2,7 +2,7 @@ import unittest
 
 # my
 from insertion_sort import InsertionSort
-from src.dsa.random_int_array import RandomIntArray
+from app.dsa.random_int_array import RandomIntArray
 
 
 class InsertionSortTestCase(unittest.TestCase):

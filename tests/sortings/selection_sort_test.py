@@ -2,7 +2,7 @@ import unittest
 
 # my
 from selection_sort import SelectionSort
-from src.dsa.random_int_array import RandomIntArray
+from app.dsa.random_int_array import RandomIntArray
 
 
 class SelectionSortCase(unittest.TestCase):
