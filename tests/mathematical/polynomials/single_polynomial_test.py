@@ -6,6 +6,7 @@ class MyTestCase(unittest.TestCase):
 
     def test_poly_str_valid(self):
         poly = SinglePolynomial([[-3.0, 3.0], [2.21, 2.0], [-2.5, 1.0]])
+        print(poly)
         self.assertEqual("-3.0^3.0 +2.21^2.0 -2.5^1.0", poly.poly_str)
 
     def test_y_valid(self):

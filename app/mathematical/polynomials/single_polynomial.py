@@ -12,10 +12,6 @@ class SinglePolynomial:
     def y(self):
         return self._y
 
-    @property
-    def solve(self):
-        return self._poly
-
     @y.setter
     def y(self, x):
         p = 0
@@ -29,20 +25,38 @@ class SinglePolynomial:
     def poly_str(self):
         return self._poly_str
 
-    def __init__(self, poly_arr: [float]):
+    def __init__(self, poly_arr: [[float]]):
         self._poly = poly_arr
+        self._poly = self.sort_poly()
+        self._n = SinglePolynomial.__find_max_coefficient(self)
+        self._poly_str = SinglePolynomial.__poly_to_string(self)
         self._y = None
-        self._poly_str = self.__poly_to_string()
-        self._n = self.__find_max_coefficient()
 
-    # P = a0
-    # P = Px + ai, i = 1 ... n
-    # here2
-    def horner_method(self, px, a, i, x):
-        self._poly[i][0] * x + self._poly[i + 1][1]
-        p = p * x +
+    def sort_poly(self):
+        sorted_poly: [[float]] = None * self.n
 
-        return self._horner_method(x0, i + 1)
+        i = self._n
+        while i != 0:
+            for pair in self._poly:
+                if pair[1] == i and sorted_poly[i] is None:
+                    sorted_poly[i] = pair
+
+                elif pair[1] == 1 and sorted_poly[i] is not None:
+                    sorted_poly[i] += pair[0]
+
+            if sorted_poly[i] is None:
+                sorted_poly[i] = [0, 0]
+
+        return sorted_poly
+
+    def horner_method(self, x):
+        poly = self._poly
+        n = self._n
+        p = None
+        while n != 1:
+            p = x * poly[n][0] + poly[n - 1][0]
+
+        return p
 
     def __poly_to_string(self):
         poly = ""
@@ -62,3 +76,4 @@ class SinglePolynomial:
                 maxx = coefficient
 
         return maxx
+
