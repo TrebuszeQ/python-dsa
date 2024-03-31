@@ -41,20 +41,8 @@ class SinglePolynomial:
 
     @staticmethod
     def __sort_poly(degree: float, arr: [[float]]):
-        sorted_poly: [[float]] = []
-        for i in range(round(int(degree))):
-            sorted_poly.append([0, 0])
 
-        i = degree
-        while i != 0:
-            for pair in arr:
-                if pair[1] == i and sorted_poly.index(i) is None:
-                    sorted_poly.append(pair)
-
-                elif pair[1] == 1 and sorted_poly.index(i) is not None:
-                    sorted_poly[i] += pair[0]
-
-        return sorted_poly
+        return sorted(arr)
 
     def horner_method(self, x):
         poly = self._poly
@@ -75,7 +63,6 @@ class SinglePolynomial:
 
         return poly
 
-    # ?
     @staticmethod
     def __find_max_coefficient(arr: [[float]]):
         maxx = 0
