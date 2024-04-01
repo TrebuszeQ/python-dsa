@@ -1,16 +1,25 @@
 import math
 from dataclasses import dataclass
+from operator import itemgetter
 
 
 @dataclass(repr=True)
 class SinglePolynomial:
+    @property
+    def poly(self):
+        return self._poly
+
+    @property
     def degree(self):
         return self._degree
-
 
     @property
     def y(self):
         return self._y
+
+    @property
+    def poly_str(self):
+        return self._poly_str
 
     @y.setter
     def y(self, x):
@@ -19,39 +28,43 @@ class SinglePolynomial:
         for pair in self._poly:
             p += math.pow(pair[0] * x, pair[1])
 
-        self._y = p
-
-    @property
-    def poly(self):
-        return self._poly
+        self._y = p + self._constant_term
 
     @poly.setter
     def poly(self, arr: [[float]]):
-        self._poly = SinglePolynomial.__sort_poly(self._degree, arr)
+        self._poly = arr
 
-    @property
-    def poly_str(self):
-        return self._poly_str
-
-    def __init__(self, poly_arr: [[float]]):
-        self._degree = SinglePolynomial.__find_max_coefficient(poly_arr)
-        self._poly = SinglePolynomial.__sort_poly(self._degree, poly_arr)
+    def __init__(self, poly_arr: [[float]], constant_term: float):
+        poly_arr = sorted(poly_arr, key=itemgetter(1), reverse=True)
+        self._degree = poly_arr[0][1] if len(poly_arr) > 0 else 0
+        self._constant_term = constant_term
+        self._poly = poly_arr
         self._poly_str = SinglePolynomial.__poly_to_string(self)
         self._y = None
 
-    @staticmethod
-    def __sort_poly(degree: float, arr: [[float]]):
+    def __fill_gaps(self):
+        result: [[float]] = []
+        n = round(self._degree) - 1
+        for i in range(n, 0, -1):
+            result[i] = [0, 0] if self._poly[i] is None else self._poly[i]
 
-        return sorted(arr)
+        return result
 
     def horner_method(self, x):
-        poly = self._poly
-        n = self._degree
+        poly = self.__fill_gaps()
+        n = round(self._degree) - 1
         p = None
-        while n != 1:
+
+        for i in range(n, 0, -1):
+            if len(poly) < n or poly[n] is None:
+                poly[n] = 0
+
+            elif poly[n - 1] is None:
+                poly[n - 1] = 0
+
             p = x * poly[n][0] + poly[n - 1][0]
 
-        return p
+        return p + self._constant_term
 
     def __poly_to_string(self):
         poly = ""
@@ -61,15 +74,5 @@ class SinglePolynomial:
 
             poly += num + "^" + coefficient
 
-        return poly
-
-    @staticmethod
-    def __find_max_coefficient(arr: [[float]]):
-        maxx = 0
-        for pair in arr:
-            coefficient = pair[1]
-            if coefficient > maxx:
-                maxx = coefficient
-
-        return maxx
+        return poly + str(self._constant_term)
 
