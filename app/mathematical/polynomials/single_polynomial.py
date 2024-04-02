@@ -42,11 +42,24 @@ class SinglePolynomial:
         self._poly_str = SinglePolynomial.__poly_to_string(self)
         self._y = None
 
+    def sort_and_fill(self):
+        n = round(self._degree)
+        result = [[0.0, 0.0] * n]
+        n -= 1
+
+        for i in range(n):
+            for pair in self._poly:
+                if pair[1] == i:
+                    result.append(pair)
+
     def __fill_gaps(self):
-        result: [[float]] = []
-        n = round(self._degree) - 1
+        n = round(self._degree)
+        result: [[float]] = [[0.0, 0.0]] * n
+        n -= 1
         for i in range(n, 0, -1):
-            result[i] = [0, 0] if self._poly[i] is None else self._poly[i]
+            for pair in self._poly:
+                if pair[1] == i:
+                    result[i] = pair
 
         return result
 
@@ -74,5 +87,5 @@ class SinglePolynomial:
 
             poly += num + "^" + coefficient
 
-        return poly + str(self._constant_term)
+        return poly + str(self._constant_term) if self._constant_term >= 0 else "-" + str(self._constant_term)
 
