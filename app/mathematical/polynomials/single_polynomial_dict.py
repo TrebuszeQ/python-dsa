@@ -36,16 +36,17 @@ class SinglePolynomialDict:
         self._poly = arr
 
     def __init__(self, poly_dct: dict[float, float], constant_term: float):
+        self._degree = SinglePolynomialDict.__find_degree(poly_dct) if len(poly_dct) > 0 else 0
         poly_dct: dict[float, float] = self.sort_and_fill(poly_dct)
-        self._degree = self.__find_degree() if len(poly_dct) > 0 else 0
         self._constant_term = constant_term
         self._poly = poly_dct
-        self._poly_str = SinglePolynomial.__poly_to_string(self)
+        self._poly_str = self.__poly_to_string()
         self._y = None
 
-    def __find_degree(self):
+    @staticmethod
+    def __find_degree(dct):
         maxx = 0
-        for key in self._poly.keys():
+        for key in dct.keys():
             if key > maxx:
                 maxx = key
 
@@ -54,26 +55,19 @@ class SinglePolynomialDict:
     def sort_and_fill(self, poly_dct: dict[float, float]):
         n = round(self._degree)
         result: dict[float: float] = dict()
-        n -= 1
 
-        for i in range(n):
-            result[i] = poly_dct[i] if i in poly_dct else 0
+        for i in range(n, 0, -1):
+            j = i * 1.0
+            result[j] = poly_dct[j] if j in poly_dct else 0.0
 
         return result
 
     def horner_method(self, x):
-        poly = self.poly
-        n = round(self._degree) - 1
-        p = None
+        a = self.sort_and_fill(self._poly)
 
-        for i in range(n, 0, -1):
-            if len(poly) < n or poly[i] is None:
-                poly[n] = 0
-
-            elif poly[n - 1] <= 0:
-                poly[n - 1] = 0
-
-            p = x * poly[i] + poly[i - 1]
+        p = 0
+        for value in a.values():
+            p = p * x + value
 
         return p + self._constant_term
 

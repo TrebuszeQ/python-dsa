@@ -69,11 +69,11 @@ class SinglePolynomial:
         p = None
 
         for i in range(n, 0, -1):
-            if len(poly) < n or poly[n] is None:
-                poly[n] = 0
+            if len(poly) < n or poly.index(n) is None:
+                poly[n * 1.0] = 0
 
-            elif poly[n - 1] is None:
-                poly[n - 1] = 0
+            elif poly.index(n - 1) is None:
+                poly[n - 1.0] = 0
 
             p = x * poly[n][0] + poly[n - 1][0]
 
