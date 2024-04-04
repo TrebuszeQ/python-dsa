@@ -55,27 +55,44 @@ class SinglePolynomial:
     def __fill_gaps(self):
         n = round(self._degree)
         result: [[float]] = [[0.0, 0.0]] * n
-        n -= 1
+
+        # for i in range(n, 0, -1):
+        #     j = i * 1.0
+        #     k = 0
+        #     for pair in self._poly:
+        #         if pair[1] == j and result[i - 1] == [0.0, 0.0]:
+        #             result[i - 1] = pair
+        #
+        #         elif pair[1] == j and result[i - 1] != [0.0, 0.0]:
+        #             result[i - 1][0] += pair[0]
+        #
+        #         elif pair[1] != j and result[i - 1] == [0.0, 0.0]:
+        #             result[i - 1] = [0.0, j]
         for i in range(n, 0, -1):
+            j = i * 1.0
+            k = 0
+            
             for pair in self._poly:
-                if pair[1] == i:
-                    result[i] = pair
+                if pair[1] == j and result[i - 1] == [0.0, 0.0]:
+                    result[i - 1] = pair
+
+                elif pair[1] == j and result[i - 1] != [0.0, 0.0]:
+                    result[i - 1][0] += pair[0]
+
+                elif pair[1] != j and result[i - 1] == [0.0, 0.0]:
+                    result[i - 1] = [0.0, j]
+
 
         return result
 
     def horner_method(self, x):
         poly = self.__fill_gaps()
-        n = round(self._degree) - 1
-        p = None
+        n = round(self._degree)
+        p = 0
 
-        for i in range(n, 0, -1):
-            if len(poly) < n or poly.index(n) is None:
-                poly[n * 1.0] = 0
-
-            elif poly.index(n - 1) is None:
-                poly[n - 1.0] = 0
-
-            p = x * poly[n][0] + poly[n - 1][0]
+        for i in range(n):
+            term = poly[i][0]
+            p = p * x + term
 
         return p + self._constant_term
 
