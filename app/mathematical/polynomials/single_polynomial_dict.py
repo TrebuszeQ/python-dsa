@@ -69,7 +69,7 @@ class SinglePolynomialDict:
         for value in a.values():
             p = p * x + value
 
-        return p + self._constant_term
+        return p * x + self._constant_term
 
     def __poly_to_string(self):
         poly = self.poly

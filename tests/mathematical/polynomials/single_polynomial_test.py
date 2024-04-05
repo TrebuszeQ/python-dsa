@@ -15,7 +15,7 @@ class MyTestCase(unittest.TestCase):
         self.assertEqual(-24.6159, poly.y)
 
     def test_horner_method_valid(self):
-        poly_ar = [[2.0, 4.0], [5.0, 2.0], [4.0, 1.0]]
+        poly_ar = [[2.0, 4.0], [-5.0, 2.0], [4.0, 1.0]]
         poly = SinglePolynomial(poly_ar, 1.0)
         self.assertEqual(47/8, poly.horner_method(3/2))
 

@@ -56,32 +56,22 @@ class SinglePolynomial:
         n = round(self._degree)
         result: [[float]] = [[0.0, 0.0]] * n
 
-        # for i in range(n, 0, -1):
-        #     j = i * 1.0
-        #     k = 0
-        #     for pair in self._poly:
-        #         if pair[1] == j and result[i - 1] == [0.0, 0.0]:
-        #             result[i - 1] = pair
-        #
-        #         elif pair[1] == j and result[i - 1] != [0.0, 0.0]:
-        #             result[i - 1][0] += pair[0]
-        #
-        #         elif pair[1] != j and result[i - 1] == [0.0, 0.0]:
-        #             result[i - 1] = [0.0, j]
+        k = 0
+
         for i in range(n, 0, -1):
             j = i * 1.0
-            k = 0
-            
+
             for pair in self._poly:
-                if pair[1] == j and result[i - 1] == [0.0, 0.0]:
-                    result[i - 1] = pair
+                if pair[1] == j and result[k] == [0.0, 0.0]:
+                    result[k] = pair
 
-                elif pair[1] == j and result[i - 1] != [0.0, 0.0]:
-                    result[i - 1][0] += pair[0]
+                elif pair[1] == j and result[k] != [0.0, 0.0]:
+                    result[k][0] += pair[0]
 
-                elif pair[1] != j and result[i - 1] == [0.0, 0.0]:
-                    result[i - 1] = [0.0, j]
+                elif pair[1] != j and result[k] == [0.0, 0.0]:
+                    result[k] = [0.0, j]
 
+            k += 1
 
         return result
 
@@ -94,7 +84,7 @@ class SinglePolynomial:
             term = poly[i][0]
             p = p * x + term
 
-        return p + self._constant_term
+        return p * x + self._constant_term
 
     def __poly_to_string(self):
         poly = ""
