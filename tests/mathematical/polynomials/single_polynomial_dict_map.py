@@ -1,4 +1,4 @@
-from app.mathematical.polynomials.single_polynomial_dict import SinglePolynomialDict
+from app.mathematical.polynomials.single_polynomial_map import SinglePolynomialDict
 import unittest
 
 
