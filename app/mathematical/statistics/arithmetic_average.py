@@ -21,5 +21,5 @@ class ArithmeticAverage:
         for num in collection:
             sigma += num
 
-        return sigma * 1/self._degree
+        return sigma/self._degree
 

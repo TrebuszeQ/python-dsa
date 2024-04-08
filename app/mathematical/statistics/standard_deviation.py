@@ -23,17 +23,19 @@ class StandardDeviation:
         return self._c4
 
     @property
-    def sigma(self):
-        return self._sigma
+    def corrected(self):
+        return self._corrected
 
     @property
-    def gamma(self):
+    def unbiased(self):
         return self._gamma
 
-    def __init__(self, collection: [float]):
-        self._degree = len(collection)
+    def __init__(self, array: [float]):
+        self._array = array
+        self._degree = len(array)
         self._c4: dict[int: float] = c4_map()
-        self._arithmetic_average = ArithmeticAverage(collection)
+        self._arithmetic_average = ArithmeticAverage(array)
+        self._corrected = self.__sigma(array)
         self._gamma = self.__gamma()
 
     def __sigma(self, collection: [float]) -> float:
@@ -42,15 +44,14 @@ class StandardDeviation:
         aa = self._arithmetic_average.value
 
         for num in collection:
-            sigma += (num - aa) ** 2
+            sigma += (num - aa) * (num - aa)
 
-        return sigma/(n - 1.0)
+        return math.sqrt(sigma/(n - 1.0))
 
     def __gamma(self) -> float:
         n = self._degree
         aa = self._arithmetic_average.value
         c4 = self._c4[n]
-        gamma = 0
 
         if 1 < n <= 75:
             gamma = aa / c4
@@ -69,14 +70,27 @@ class StandardDeviation:
 
         return gamma
 
-    def single_algorithm(self, collection: [float]) -> float:
+    def single_loop(self) -> float:
         n = self._degree
         s = 0
         sq_sum = 0
 
-        for num in collection:
+        for num in self._array:
             s += num
             sq_sum += num * num
 
-        return (sq_sum - (n - 1)) / (s * n)
+        return sq_sum / (s * n)
+
+    def bessel_correction_unbiased(self) -> float:
+        n = self._degree
+        s = 0
+        sum_sq = 0
+
+        for num in self._array:
+            s += num
+            sum_sq += num * num
+
+        variance = (sum_sq - (s * s) / n) / (n - 1)
+        return math.sqrt(variance)
+
 
