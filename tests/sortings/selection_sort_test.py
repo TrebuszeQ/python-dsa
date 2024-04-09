@@ -7,7 +7,7 @@ from app.dsa.random_int_array import RandomIntArray
 
 class SelectionSortCase(unittest.TestCase):
     def setUp(self):
-        self.arr = RandomIntArray.gen_1d_arr(20)
+        self.arr = RandomIntArray.gen_1d_arr(20, 0, 100)
 
     def test_sort_valid(self):
         print(sorted(self.arr))

@@ -1,5 +1,5 @@
 import unittest
-from app.mathematical.relations.ordered_pair import OrderedPair
+from app.calculus.relations.ordered_pair import OrderedPair
 
 
 class OrderedPairTest(unittest.TestCase):

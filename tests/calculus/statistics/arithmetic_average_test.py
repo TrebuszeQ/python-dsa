@@ -1,5 +1,5 @@
 import unittest
-from app.mathematical.statistics.arithmetic_average import ArithmeticAverage
+from app.calculus.statistics.arithmetic_average import ArithmeticAverage
 
 
 class StandardDeviationTest(unittest.TestCase):

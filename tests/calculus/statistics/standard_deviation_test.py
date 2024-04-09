@@ -1,5 +1,5 @@
 import unittest
-from app.mathematical.statistics.standard_deviation import StandardDeviation
+from app.calculus.statistics.standard_deviation import StandardDeviation
 
 
 class StandardDeviationTest(unittest.TestCase):

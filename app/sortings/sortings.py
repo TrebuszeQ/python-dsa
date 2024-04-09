@@ -10,7 +10,7 @@ from app.sortings.selection_sort import SelectionSort
 class Sortings:
     @staticmethod
     def menu():
-        arr = RandomIntArray.gen_1d_arr(20)
+        arr = RandomIntArray.gen_1d_arr(20, 0, 100)
         Cli.menu([
             {"name": "1. Metoda bąbelkowa.", "function": BubbleSort.sort, "func_args": arr},
             {"name": "2. Metoda przez wstawianie.", "function": InsertionSort.sort, "func_args": arr},

@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from app.mathematical.relations.ordered_pair import OrderedPair
+from app.calculus.relations.ordered_pair import OrderedPair
 
 
 @dataclass(repr=True)

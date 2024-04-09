@@ -1,7 +1,7 @@
 import math
 from dataclasses import dataclass
-from app.mathematical.statistics.arithmetic_average import ArithmeticAverage
-from app.mathematical.statistics.c4_map import c4_map
+from app.calculus.statistics.arithmetic_average import ArithmeticAverage
+from app.calculus.statistics.c4_map import c4_map
 
 
 @dataclass(repr=True)

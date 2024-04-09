@@ -1,4 +1,4 @@
-from app.mathematical.polynomials.single_polynomial import SinglePolynomial
+from app.calculus.polynomials.single_polynomial import SinglePolynomial
 import unittest
 
 
