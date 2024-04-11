@@ -3,7 +3,7 @@ from dataclasses import dataclass
 
 
 @dataclass(repr=True)
-class RandomIntArray:
+class RandomIntArray(list[int]):
     @staticmethod
     def gen_1d_arr(n, min_seed, max_seed):
         res = [randint(min_seed, max_seed) for i in range(n)]
