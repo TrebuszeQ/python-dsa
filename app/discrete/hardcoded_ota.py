@@ -16,6 +16,7 @@ class HardcodedOta:
         self._c = [int] * len(arr)
         self.__set_c(arr)
         c = self._c
+        self.__last_len = len(bin(arr[len(arr) - 1]))
 
     # in place
     def __set_c(self, arr: list[int]):
@@ -37,4 +38,12 @@ class HardcodedOta:
                 arr[2] * arr[1] * arr[0]
 
     def __to_bin(self, num: int):
-        return bin(num)[2:]
+        bit = bin(num)[2:]
+        # format(num, "#010b")
+        count = len(bit) - self.__last_len
+
+        for bit in range(count):
+            bit += 0
+
+        return bit
+
