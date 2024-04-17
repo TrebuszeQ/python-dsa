@@ -39,26 +39,25 @@ class Ota:
         c = self._c_arr
 
         for i in range(self._degree):
+            sigma = 0
             a = self._bin_arr[i]
-            sigma = (c[0] +
-                c[1] * a[0] +
-                (c[1] + c[2]) * a[1] +
-                (c[3] - c[1]) * a[1] * a[0] +
-                (c[1] + c[2] + c[3] + c[4]) * a[2] +
-                (c[5] - c[1]) * a[2] * a[0] +
-                (c[6] + c[5] - c[2] - c[1]) * a[2] * a[1] +
-                (c[7] - c[5] - c[3] + c[1]) * a[2] * a[1] * a[0])
+            sigma += c[0]
+            sigma += c[1] * a[2]
+            sigma += (c[1] + c[2]) * a[1]
+            sigma += (c[3] - c[1]) * a[1] * a[2]
+            sigma += (c[1] + c[2] + c[3] + c[4]) * a[0]
+            sigma += (c[5] - c[1]) * a[0] * a[2]
+            sigma += (c[6] + c[5] - c[2] - c[1]) * a[0] * a[1]
+            sigma += (c[7] - c[5] - c[3] + c[1]) * a[0] * a[1] * a[2]
 
             result = [i, sigma]
             self._points_arr.append(result)
-
 
     def _set_c_arr(self, arr: list[int]):
         c_arr = self._c_arr = []
 
         for i in range(self.degree):
-            num = arr[i]
-            val = num if i == 0 else (num - arr[i - 1])
+            val = arr[i] if i == 0 else (arr[i] - arr[i - 1])
             c_arr.append(val)
 
     def _set_bin_arr(self):
