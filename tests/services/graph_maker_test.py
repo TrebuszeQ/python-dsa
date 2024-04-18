@@ -1,6 +1,6 @@
 import unittest
 
-from app.services.graph_maker import GraphMaker
+from app.services.graph_maker_service import GraphMaker
 
 
 class MyTestCase(unittest.TestCase):

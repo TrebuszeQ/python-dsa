@@ -32,6 +32,11 @@ class OtaTests(unittest.TestCase):
         points_arr = [[0, 2], [1, 3], [2, 7], [3, 11], [4, 17], [5, 23], [6, 31], [7, 47]]
         self.assertEqual(points_arr, ota.points_arr)
 
+    def test_show_plot_valid(self):
+        lis = [2, 3, 7, 11, 17, 23, 31, 47]
+        ota = Ota(lis)
+        ota.show_plot()
+
 
 if __name__ == '__main__':
     unittest.main()
