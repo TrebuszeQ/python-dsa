@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from app.services.plot_maker_util import PlotMakerService
+from app.services.plot_maker_service import PlotMakerService
 
 
 @dataclass(repr=True)
@@ -33,19 +33,27 @@ class Ota:
     def binary_array(self):
         return self._bin_arr
 
+    @binary_array.setter
+    def binary_array(self, arr: [int]):
+        self._bin_arr = arr
+
     def __init__(self, arr: list[int]):
-        self._points_arr = None
+        self._points_arr = []
         self._degree = len(arr)
         self._binary_degree = len(bin(self._degree - 1)[2:])
         self._c_arr = []
         self._set_c_arr(arr)
         self._bin_arr = []
         self._set_bin_arr()
-        self._points_arr = []
         self._x_arr = []
         self._y_arr = []
         self._set_points_arr()
-        self._plot_maker_service = PlotMakerService(self._x_arr, self._y_arr)
+
+    def reset_points_arr(self):
+        self._x_arr = []
+        self._y_arr = []
+        self._points_arr = []
+        self._set_points_arr()
 
     def _set_points_arr(self):
         c = self._c_arr
@@ -81,6 +89,3 @@ class Ota:
 
     def __to_bin(self, num: int):
         return format(num, f"0{self._binary_degree}b")
-
-    def show_plot(self):
-        self._plot_maker_service.make_scatter_plot("Plot of Ota function", 'o', 20)

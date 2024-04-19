@@ -14,7 +14,7 @@ class BubbleSort:
         return arr
 
     @staticmethod
-    def sort_downto_count(arr):
+    def sort_down_to_count(arr):
         comp_count = 0
         swap_count = 0
 

@@ -23,7 +23,7 @@ class SortsComp:
     @staticmethod
     def _gen_unsorted_comparison_arr():
         return [
-            {"Algo": "Bubble sort", "Array": BubbleSort.sort_downto_count(SortsComp._gen_arr(20))},
+            {"Algo": "Bubble sort", "Array": BubbleSort.sort_down_to_count(SortsComp._gen_arr(20))},
             {"Algo": "Insertion sort with guard", "Array": InsertionSort.sort_count(SortsComp._gen_arr(20))},
             {"Algo": "Insertion sort with flag", "Array": InsertionSort.sort_flag_count(SortsComp._gen_arr(20))},
             {"Algo": "Selection sort", "Array": SelectionSort.sort2_count(SortsComp._gen_arr(20))},
@@ -33,7 +33,7 @@ class SortsComp:
     @staticmethod
     def _gen_sorted_comparison_arr(arr):
         return [
-            {"Algo": "Bubble sort", "Array": BubbleSort.sort_downto_count(arr)},
+            {"Algo": "Bubble sort", "Array": BubbleSort.sort_down_to_count(arr)},
             {"Algo": "Insertion sort with guard", "Array": InsertionSort.sort_count(arr)},
             {"Algo": "Insertion sort with flag", "Array": InsertionSort.sort_flag_count(arr)},
             {"Algo": "Selection sort", "Array": SelectionSort.sort2_count(arr)},

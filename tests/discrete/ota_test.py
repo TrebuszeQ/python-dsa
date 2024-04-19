@@ -1,5 +1,6 @@
 import unittest
 from app.discrete.ota import Ota
+from app.services.plot_maker_service import PlotMakerService
 
 
 class OtaTests(unittest.TestCase):
@@ -32,10 +33,12 @@ class OtaTests(unittest.TestCase):
         points_arr = [[0, 2], [1, 3], [2, 7], [3, 11], [4, 17], [5, 23], [6, 31], [7, 47]]
         self.assertEqual(points_arr, ota.points_arr)
 
-    def test_show_plot_valid(self):
+    def test_plot_visually_valid(self):
         lis = [2, 3, 7, 11, 17, 23, 31, 47]
         ota = Ota(lis)
-        ota.show_plot()
+
+        plot_maker = PlotMakerService(ota.x_arr, ota.y_arr)
+        plot_maker.make_scatter_plot("Plot of Ota function", 'o', 20)
 
 
 if __name__ == '__main__':
