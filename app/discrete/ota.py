@@ -1,5 +1,4 @@
 from dataclasses import dataclass
-from app.services.plot_maker_service import PlotMakerService
 
 
 @dataclass(repr=True)

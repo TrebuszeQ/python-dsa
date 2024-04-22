@@ -16,5 +16,3 @@ def algebraic_sort(ota: Ota):
 
     ota.binary_array = negated_arr
     ota.reset_points_arr()
-
-
