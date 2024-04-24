@@ -1,22 +1,28 @@
+from tabulate import tabulate
 
 
 class BooleanAlgebra:
     @staticmethod
-    def _print_single_table_of_truth(p):
-        if p == 0:
-            truth_table_p = [1, 1, 0, 0]
-            truth_table_neg_p = [0, 0, 1, 1]
+    def _print_single_table_of_truth(p, np, l, r, res):
+        eq = 1 if l == r else 0
 
-        elif p == 1:
-            truth_table_p = [0, 0, 1, 1]
-            truth_table_neg_p = [1, 1, 0, 0]
+        truth_table = [[p, np, l, r, eq], [np, p, l, r, eq]]
 
-        res_table =  
+        head = ["p", "~p", "l", "r", "l <=> r"]
+        print(tabulate(truth_table, headers=head, tablefmt="grid"))
+        print("".ljust(34), res)
+        print()
 
     @staticmethod
-    def _print_double_truth_table(p, q):
-        truth_table_p = [1, 1, 0, 0]
-        truth_table_q = [1, 0, 1, 0]
+    def _print_double_table_of_truth(p, np, q, nq, l, r, res):
+        eq = 1 if l == r else 0
+
+        truth_table = [[p, np, q, nq, l, r, eq], [np, p, q, nq, l, r, eq]]
+
+        head = ["p", "~p", "q", "~q", "l", "r", "l <=> r"]
+        print(tabulate(truth_table, headers=head, tablefmt="grid"))
+        print("".ljust(43), res)
+        print()
 
     @staticmethod
     def to_bin(num):
@@ -39,9 +45,42 @@ class BooleanAlgebra:
 
     @staticmethod
     def double_negation(num):
-        p = int(BooleanAlgebra.to_bin(num)[0])
-        left = -(-p)
-        right = p
-        res = 1 - (left - right)**2
-        return
+        p = 1 if num > 0 else 0
+        np = 0 if num > 0 else 1
+        l = ~np
+        r = p
+        res = 1 - (p - l)**2
+        BooleanAlgebra._print_single_table_of_truth(p, np, l, r, res)
+        return res
 
+    @staticmethod
+    def double_negation(num):
+        p = 1 if num > 0 else 0
+        np = 0 if num > 0 else 1
+        l = np
+        r = p
+        res = 1 - (p - l) ** 2
+        BooleanAlgebra._print_single_table_of_truth(p, np, l, r, res)
+        return res
+
+    @staticmethod
+    def excluded_middle(num):
+        p = 1 if num > 0 else 0
+        np = 0 if num > 0 else 1
+
+        l = p | np
+        r = 1
+        res = 1 - (p - l) ** 2
+        BooleanAlgebra._print_single_table_of_truth(p, np, l, r, res)
+        return res
+
+    @staticmethod
+    def contradiction(num):
+        p = 1 if num > 0 else 0
+        np = 0 if num > 0 else 1
+
+        l = ~(p & np)
+        l = 0 if l < 0 else 0
+        r = 1
+        res = 1 - (p - l) ** 2
+        BooleanAlgebra._print_single_table_of_truth(p, np, l, r, res)
