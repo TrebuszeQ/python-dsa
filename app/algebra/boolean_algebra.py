@@ -1,80 +1,128 @@
 import math
 from tabulate import tabulate
 
-    p = 1 if num > 0 else 0
-    np = 1 - p
-    res = (1 - (l - p) ** 2)
 
+class BooleanAlgebra:
 
+    @property
+    def p(self):
+        return self._p
+
+    @property
+    def q(self):
+        return self._q
+
+    @property
+    def res(self):
+        return self._res
+
+    @property
+    def truth_table(self):
+        return self._truth_table
+
+    def __init__(self, num):
+        self._p = 1 if num > 0 else 0
+        self._q = None
+        self._np = 1 - self._p
+        self._nq = None
+        self._res = None
+        self._truth_table = []
+
+    @staticmethod
     def _is_0_or_1(num):
         return 1 if num > 0 else 0
 
-    def _print_single_table_of_truth(p, np, l, r, res):
+    def __set_table_of_truth(self, l, r):
         eq = 1 if l == r else 0
+        self._truth_table = [[self._np, self._p, l, r, eq], [self._p, self._np, l, r, eq]] if self._q is None \
+            else [[self._np, self._p, self._nq, self._q, l, r, eq], [self._p, self._np, self._nq, self._q, l, r, eq]]
 
-        truth_table = [[p, np, l, r, eq], [np, p, l, r, eq]]
+    def print_table_of_truth(self, title="Truth Table"):
+        if self._q is None:
+            head = ["p", "~p", "l", "r", "l <=> r"]
+            indent = 34
 
-        head = ["p", "~p", "l", "r", "l <=> r"]
-        print(tabulate(truth_table, headers=head, tablefmt="grid"))
-        print("".ljust(34), res)
+        else:
+            head = ["p", "~p", "q", "~q", "l", "r", "l <=> r"]
+            indent = 43
+
+        print(title)
+        print(tabulate(self._truth_table, headers=head, tablefmt="grid"))
+        print("".ljust(indent), self.res)
         print()
 
+    def inversion(self):
+        return 1 - (1 - self._p)
 
-    def _print_double_table_of_truth(p, np, q, nq, l, r, res):
-        eq = 1 if l == r else 0
+    def double_negation(self, print_table: bool = True):
+        l = (1 - (1 - self._p))
+        r = self._p
+        self._res = 1 - (l - r)**2
+        self.__set_table_of_truth(l, r)
+        if print_table:
+            self.print_table_of_truth("Law of Double Negation")
+        return self._res
 
-        truth_table = [[p, np, q, nq, l, r, eq], [np, p, q, nq, l, r, eq]]
-
-        head = ["p", "~p", "q", "~q", "l", "r", "l <=> r"]
-        print(tabulate(truth_table, headers=head, tablefmt="grid"))
-        print("".ljust(43), res)
-        print()
-
-
-    def to_bin(num):
-        return bin(num)[2:]
-
-
-    def to_bin_array(num):
-        binary = to_bin(num)
-        return [int(bit) for bit in binary]
-
-    # p v (~p) <=> 1
-    # @staticmethod
-    # def excluded_middle(num):
-    #     a0 = BooleanAlgebra.to_bin_array(num)[0]
-    #     return 1 - (1 - a0) * (1 - (1 - a0))
-
-
-    def inversion(num):
-        return to_bin(~(~num))
-
-
-    def double_negation(num):
-        p = 1 if num > 0 else 0
-        np = 1 - p
-        l = (1 - (1 - p))
-        r = p
-        res = 1 - (l - p)**2
-        _print_single_table_of_truth(p, np, l, r, res)
-        return res
-
-
-    def excluded_middle(num):
-        p = 1 if num > 0 else 0
-        np = 1 - p
-        l = 1 - (1 - p) * (1 - (1 - p))
+    def excluded_middle(self, print_table: bool = True):
+        l = 1 - (1 - self._p) * (1 - (1 - self._p))
         r = 1
-        res = (1 - (l - p) ** 2)
-        _print_single_table_of_truth(p, np, l, r, res)
-        return res
+        self._res = (1 - (l - r) ** 2)
+        self.__set_table_of_truth(l, r)
+        if print_table:
+            self.print_table_of_truth("Law of Excluded Middle")
+        return self._res
 
-
-    def contradiction(num):
-        p = 1 if num > 0 else 0
-        np = 1 - p
-        l = 0 if ~(p & np) < 0 else 0
+    def contradiction(self, print_table: bool = True):
+        l = (1 - (self._p & self._np))
         r = 1
-        res = (1 - (l - p) ** 2)
-        _print_single_table_of_truth(p, np, l, r, res)
-        return res
+        self._res = (1 - (l - r) ** 2)
+        self.__set_table_of_truth(l, r)
+        if print_table:
+            self.print_table_of_truth("Law of Contradiction")
+        return self._res
+
+    # Prawo idempotentności alternatywy
+    def alternative_simplification(self, print_table: bool = True):
+        l = (self._p | self._p)
+        r = self._p
+        self._res = (1 - (l - r) ** 2)
+        self.__set_table_of_truth(l, r)
+        if print_table:
+            self.print_table_of_truth("Law of Alternative Simplification")
+        return self._res
+
+    def conjuction_simplification(self, print_table: bool = True):
+        l = (self._p & self._p)
+        r = self._p
+        self._res = (1 - (l - r) ** 2)
+        self.__set_table_of_truth(l, r)
+        if print_table:
+            self.print_table_of_truth("Law of Conjuction Simplification")
+        return self._res
+
+    def first_clavius(self, print_table: bool = True):
+        l = self._p
+        r = self._np
+        self._res = (1 - (l - r) ** 2)
+        self.__set_table_of_truth(l, r)
+
+        l2 = self._res
+        r2 = self._np
+        self._res = (1 - (l2 - r2) ** 2)
+        self.__set_table_of_truth(l2, r2)
+        if print_table:
+            self.print_table_of_truth("First Law of Clavius")
+        return self._res
+
+    def second_clavius(self, print_table: bool = True):
+        l = self._np
+        r = self._p
+        self._res = (1 - (l - r) ** 2)
+
+        l2 = self._res
+        r2 = self._p
+        self._res = (1 - (l2 - r2) ** 2)
+        self.__set_table_of_truth(l2, r2)
+        if print_table:
+            self.print_table_of_truth("Second Law of Clavius")
+        return self._res
