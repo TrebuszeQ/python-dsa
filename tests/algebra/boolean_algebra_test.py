@@ -33,8 +33,17 @@ class MyTestCase(unittest.TestCase):
         self.assertEqual(result, 1)
 
     def test_law_of_duns_scotus(self):
-        result = BooleanAlgebra.duns_scotus(3, 4)
-        self.assertEqual(result, 0)
+        result = BooleanAlgebra.law_of_duns_scotus(3, 4)
+        self.assertEqual(result, 1)
+
+    def test_first_law_of_simplification(self):
+        result = BooleanAlgebra.first_law_of_simplification(3, 4)
+        self.assertEqual(result, 1)
+        self.assertEqual(result, 1)
+
+    def test_second_law_of_simplification(self):
+        result = BooleanAlgebra.second_law_of_simplification(3, 4)
+        self.assertEqual(result, 1)
 
 
 if __name__ == '__main__':
