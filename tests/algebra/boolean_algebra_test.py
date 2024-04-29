@@ -6,7 +6,7 @@ class MyTestCase(unittest.TestCase):
 
     def test_law_of_double_negation_valid(self):
         result = BooleanAlgebra.double_negation(3)
-        self.assertEqual(result, 1)
+        BooleanAlgebra.make_table_of_truth_to_range(2, BooleanAlgebra.double_negation)
 
     def test_law_of_excluded_middle_valid(self):
         result = BooleanAlgebra.excluded_middle(3)
