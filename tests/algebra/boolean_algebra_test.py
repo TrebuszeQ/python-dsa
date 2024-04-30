@@ -5,44 +5,43 @@ from app.algebra.boolean_algebra import BooleanAlgebra
 class MyTestCase(unittest.TestCase):
 
     def test_law_of_double_negation_valid(self):
-        result = BooleanAlgebra.double_negation(3)
-        BooleanAlgebra.make_table_of_truth_to_range(2, BooleanAlgebra.double_negation)
+        tt, result = BooleanAlgebra.make_table_of_truth_to_range_and_print(0, 1, BooleanAlgebra.double_negation, title="Double Negation Truth Table")
+        self.assertEqual(result, 1)
 
     def test_law_of_excluded_middle_valid(self):
-        result = BooleanAlgebra.excluded_middle(3)
+        tt, result = BooleanAlgebra.make_table_of_truth_to_range_and_print(0, 1, BooleanAlgebra.excluded_middle, title="Excluded Middle Truth Table")
         self.assertEqual(result, 1)
 
     def test_law_of_contradiction_valid(self):
-        result = BooleanAlgebra.contradiction(3)
+        tt, result = BooleanAlgebra.make_table_of_truth_to_range_and_print(0, 1, BooleanAlgebra.contradiction, title="Contradiction Truth Table")
         self.assertEqual(result, 1)
 
     def test_law_of_alternative_simplification_valid(self):
-        result = BooleanAlgebra.alternative_simplification(3)
+        tt, result = BooleanAlgebra.make_table_of_truth_to_range_and_print(0, 1, BooleanAlgebra.alternative_simplification, title="Alternative Simplification Truth Table")
         self.assertEqual(result, 1)
 
     def test_law_of_conjuction_simplification_valid(self):
-        result = BooleanAlgebra.conjuction_simplification(3)
+        tt, result = BooleanAlgebra.make_table_of_truth_to_range_and_print(0, 1, BooleanAlgebra.conjuction_simplification, title="Conjuction Simplification Truth Table")
         self.assertEqual(result, 1)
 
     def test_first_law_of_clavius_valid(self):
-        result = BooleanAlgebra.first_law_of_clavius(3)
+        tt, result = BooleanAlgebra.make_table_of_truth_to_range_and_print(0, 1, BooleanAlgebra.first_law_of_clavius, title="First Law of Clavius Truth Table")
         self.assertEqual(result, 1)
 
     def test_second_law_of_clavius_valid(self):
-        result = BooleanAlgebra.second_law_of_clavius(3)
+        tt, result = BooleanAlgebra.make_table_of_truth_to_range_and_print(0, 1, BooleanAlgebra.second_law_of_clavius, title="Second Law of Clavius Truth Table")
         self.assertEqual(result, 1)
 
     def test_law_of_duns_scotus(self):
-        result = BooleanAlgebra.law_of_duns_scotus(3, 4)
+        tt, result = BooleanAlgebra.make_table_of_truth_to_range_and_print(0, 1, BooleanAlgebra.law_of_duns_scotus, q=True, title="Law of Duns Scotus Truth Table")
         self.assertEqual(result, 1)
 
     def test_first_law_of_simplification(self):
-        result = BooleanAlgebra.first_law_of_simplification(3, 4)
-        self.assertEqual(result, 1)
+        tt, result = BooleanAlgebra.make_table_of_truth_to_range_and_print(0, 1, BooleanAlgebra.first_law_of_simplification, q=True, title="First Law of Simplification Truth Table")
         self.assertEqual(result, 1)
 
     def test_second_law_of_simplification(self):
-        result = BooleanAlgebra.second_law_of_simplification(3, 4)
+        tt, result = BooleanAlgebra.make_table_of_truth_to_range_and_print(0, 1, BooleanAlgebra.second_law_of_simplification, q=True, title="Second Law of Simplification Truth Table")
         self.assertEqual(result, 1)
 
 
