@@ -5,44 +5,47 @@ class BooleanAlgebra:
     truth_table = []
 
     @staticmethod
-    def make_table_of_truth_to_range_and_print(from_value, to_value, boolean_function, q=None, title="Truth Table"):
+    def _convert_value_to_bin_array(val):
+        val_bin = bin(val)
+        index = val_bin.index('b') + 1
+        to_bin_cut = val_bin[index:]
+        return [char for char in to_bin_cut]
+
+    @staticmethod
+    def make_table_of_truth_to_range_and_print(boolean_function, q=None, title="Truth Table"):
         truth_table = []
         res = None
         headers = []
 
         if q is None:
-            for x in range(from_value, to_value):
-                tt, headers = boolean_function(x)
-                headers.insert(x, "no.")
+            for i in range(1):
+                tt, headers = boolean_function(i)
+                tt.insert(0, i + 1)
                 truth_table.append(tt)
 
-                res = 1 if tt[len(tt)-1] == 1 else 0
+            res = 1 if tt[len(tt) - 1] == 1 else 0
 
         else:
-            for x in range(from_value, to_value):
-                y = x
-                tt, headers = boolean_function(x, y)
-                tt.insert(x, "no.")
+            for i in range(1):
+                tt, headers = boolean_function(i, i)
+                tt.insert(0, i)
                 truth_table.append(tt)
-                truth_table.append(BooleanAlgebra.truth_table)
 
-                res = 1 if tt[len(tt) - 1] == 1 else 0
+            res = 1 if tt[len(tt) - 1] == 1 else 0
 
-        # title = boolean_function.__name__() + "truth table"
         BooleanAlgebra.print_table_of_truth(truth_table, headers, res, title=title)
         return [truth_table, res]
 
     @staticmethod
-    def print_table_of_truth(truth_table, headings, res, title="Truth Table"):
+    def print_table_of_truth(truth_table, headers, res, title="Truth Table"):
         print(title)
-        print(tabulate(truth_table, headers=headings, tablefmt="grid"))
+        print(tabulate(truth_table, headers=headers, tablefmt="grid"))
         print(f"result: {res}")
         print()
 
     @staticmethod
-    def double_negation(x):
-        p = 1 if x > 0 else 0
-        np = 0 if p > 1 else 1
+    def double_negation(p):
+        np = 0 if p == 1 else 1
         res_str = "[~(~p)] <=> p"
 
         l_str = "~(~p)"
@@ -53,30 +56,15 @@ class BooleanAlgebra:
 
         res = 1 - (l - r) ** 2
         headers = ["no.", "p", "~p", l_str, r_str, res_str]
-        return [[np, p, l, r, res], headers]
-
-    # @staticmethod
-    # def print_table_of_truth(truth_table, res, res_str, l_str, r_str, q=None, title="Truth Table"):
-    #     if q is None:
-    #         head = ["no.", "p", "~p", l_str, r_str, res_str]
-    #
-    #     else:
-    #         head = ["no.", "p", "~p", "q", "~q", l_str, r_str, f"{l_str} <=> {r_str}"]
-    #
-    #     print(title)
-    #     print(tabulate(truth_table, headers=head, tablefmt="grid"))
-    #     print(f"result: {res}")
-    #
-    #     print()
+        return [[p, np, l, r, res], headers]
 
     @staticmethod
     def inversion(p):
         return 1 - (1 - p)
 
     @staticmethod
-    def excluded_middle(x):
-        p = 1 if x > 0 else 0
-        np = 0 if x > 1 else 1
+    def excluded_middle(p):
+        np = 0 if p == 1 else 1
         res_str = "[p | (~p)] <=> 1"
 
         l_str = "[p | (~p)]"
@@ -87,12 +75,12 @@ class BooleanAlgebra:
 
         res = (1 - (l - r) ** 2)
         headers = ["no.", "p", "~p", l_str, r_str, res_str]
-        return [[np, p, l, r, res], headers]
+        return [[p, np, l, r, res], headers]
 
     @staticmethod
-    def contradiction(x):
-        p = 1 if x > 0 else 0
-        np = 0 if x > 1 else 1
+    def contradiction(p):
+        np = 0 if p == 1 else 1
+
         res_str = "[~(p & ~p)] <=> 1"
 
         l_str = "~(p & ~p)"
@@ -103,13 +91,12 @@ class BooleanAlgebra:
 
         res = (1 - (l - r) ** 2)
         headers = ["no.", "p", "~p", l_str, r_str, res_str]
-        return [[np, p, l, r, res], headers]
+        return [[p, np, l, r, res], headers]
 
     # Prawo idempotentności alternatywy
     @staticmethod
-    def alternative_simplification(x):
-        p = 1 if x > 0 else 0
-        np = 0 if x > 1 else 1
+    def alternative_simplification(p):
+        np = 0 if p == 1 else 1
         res_str = "(p | p) <=> p"
 
         l_str = "(p | p)"
@@ -120,12 +107,11 @@ class BooleanAlgebra:
 
         res = (1 - (l - r) ** 2)
         headers = ["no.", "p", "~p", l_str, r_str, res_str]
-        return [[np, p, l, r, res], headers]
+        return [[p, np, l, r, res], headers]
 
     @staticmethod
-    def conjuction_simplification(x):
-        p = 1 if x > 0 else 0
-        np = 0 if x > 1 else 1
+    def conjuction_simplification(p):
+        np = 0 if p == 1 else 1
         res_str = "(p & ~p) <=> p"
 
         l_str = "(p & p)"
@@ -136,12 +122,11 @@ class BooleanAlgebra:
 
         res = (1 - (l - r) ** 2)
         headers = ["no.", "p", "~p", l_str, r_str, res_str]
-        return [[np, p, l, r, res], headers]
+        return [[p, np, l, r, res], headers]
 
     @staticmethod
-    def first_law_of_clavius(x):
-        p = 1 if x > 0 else 0
-        np = 0 if x > 1 else 1
+    def first_law_of_clavius(p):
+        np = 0 if p == 1 else 1
         res_str = "(p => ~p) => ~p"
 
         l_str = "(p => ~p)"
@@ -152,12 +137,11 @@ class BooleanAlgebra:
 
         res = (1 - (l - r) ** 2)
         headers = ["no.", "p", "~p", l_str, r_str, res_str]
-        return [[np, p, l, r, res], headers]
+        return [[p, np, l, r, res], headers]
 
     @staticmethod
-    def second_law_of_clavius(x):
-        p = 1 if x > 0 else 0
-        np = 0 if x > 1 else 1
+    def second_law_of_clavius(p):
+        np = 0 if p == 1 else 1
         res_str = "(~p => p) => p"
 
         l_str = "(~p => p)"
@@ -168,14 +152,10 @@ class BooleanAlgebra:
 
         res = (1 - (l - r) ** 2)
         headers = ["no.", "p", "~p", l_str, r_str, res_str]
-        return [[np, p, l, r, res], headers]
+        return [[p, np, l, r, res], headers]
 
     @staticmethod
-    def law_of_duns_scotus(x, y):
-        p = 1 if x > 0 else 0
-        np = 0 if x > 1 else 1
-        q = 1 if y > 0 else 0
-        nq = 0 if y > 1 else 1
+    def law_of_duns_scotus(p, q):
         res_str = "(~p => p) => p"
 
         l_str = "(~q)"
@@ -185,15 +165,12 @@ class BooleanAlgebra:
         r = 1 - (q & (1 - p))
 
         res = 1 - (l & (1 - r))
-        headers = ["no.", "p", "~p", "q", "~q", l_str, r_str, res_str]
-        return [[np, p, q, nq, l, r, res], headers]
+        headers = ["no.", "p", "q", l_str, r_str, res_str]
+        return [[p, q, l, r, res], headers]
+
 
     @staticmethod
-    def first_law_of_simplification(x, y):
-        p = 1 if x > 0 else 0
-        np = 0 if x > 1 else 1
-        q = 1 if y > 0 else 0
-        nq = 0 if y > 1 else 1
+    def first_law_of_simplification(p, q):
         res_str = "(~q) => (q => p)"
 
         l_str = "q"
@@ -203,15 +180,15 @@ class BooleanAlgebra:
         r = 1 - (p & 1 - q)
 
         res = 1 - (l & (1 - r))
-        headers = ["no.", "p", "~p", "q", "~q", l_str, r_str, res_str]
-        return [[np, p, q, nq, l, r, res], headers]
+        # headers = ["no.", "p", "~p", "q", "~q", l_str, r_str, res_str]
+        # return [[np, p, q, nq, l, r, res], headers]
+
+        headers = ["no.", "p", "q", l_str, r_str, res_str]
+        return [[p, q, l, r, res], headers]
 
     @staticmethod
-    def second_law_of_simplification(x, y):
-        p = 1 if x > 0 else 0
-        np = 0 if x > 1 else 1
-        q = 1 if y > 0 else 0
-        nq = 0 if y > 1 else 1
+    def second_law_of_simplification(p, q):
+        np = 0 if p == 1 else 1
         res_str = "(q) => (p => q)"
 
         l_str = "(q & p)"
@@ -221,5 +198,6 @@ class BooleanAlgebra:
         r = 1 - (q & (1 - np))
 
         res = 1 - (l & (1 - r))
-        headers = ["no.", "p", "~p", "q", "~q", l_str, r_str, res_str]
-        return [[np, p, q, nq, l, r, res], headers]
+        headers = ["no.", "p", "q", l_str, r_str, res_str]
+        return [[p, q, l, r, res], headers]
+
