@@ -5,13 +5,6 @@ class BooleanAlgebra:
     truth_table = []
 
     @staticmethod
-    def _convert_value_to_bin_array(val):
-        val_bin = bin(val)
-        index = val_bin.index('b') + 1
-        to_bin_cut = val_bin[index:]
-        return [char for char in to_bin_cut]
-
-    @staticmethod
     def make_table_of_truth_to_range_and_print(boolean_function, q=None, title="Truth Table"):
         truth_table = []
         res = None
@@ -26,10 +19,18 @@ class BooleanAlgebra:
             res = 1 if tt[len(tt) - 1] == 1 else 0
 
         else:
-            for i in range(1):
-                tt, headers = boolean_function(i, i)
-                tt.insert(0, i)
-                truth_table.append(tt)
+            tt, headers = boolean_function(0, 0)
+            tt.insert(0, 0)
+            truth_table.append(tt)
+            tt, headers = boolean_function(0, 1)
+            tt.insert(0, 1)
+            truth_table.append(tt)
+            tt, headers = boolean_function(1, 0)
+            tt.insert(0, 2)
+            truth_table.append(tt)
+            tt, headers = boolean_function(1, 1)
+            tt.insert(0, 3)
+            truth_table.append(tt)
 
             res = 1 if tt[len(tt) - 1] == 1 else 0
 
@@ -45,7 +46,7 @@ class BooleanAlgebra:
 
     @staticmethod
     def double_negation(p):
-        np = 0 if p == 1 else 1
+        np = 1 - p
         res_str = "[~(~p)] <=> p"
 
         l_str = "~(~p)"
@@ -54,7 +55,7 @@ class BooleanAlgebra:
         r_str = "p"
         r = p
 
-        res = 1 - (l - r) ** 2
+        res = 1 - (r - l) ** 2
         headers = ["no.", "p", "~p", l_str, r_str, res_str]
         return [[p, np, l, r, res], headers]
 
@@ -64,7 +65,7 @@ class BooleanAlgebra:
 
     @staticmethod
     def excluded_middle(p):
-        np = 0 if p == 1 else 1
+        np = 1 - p
         res_str = "[p | (~p)] <=> 1"
 
         l_str = "[p | (~p)]"
@@ -73,13 +74,13 @@ class BooleanAlgebra:
         r_str = "1"
         r = 1
 
-        res = (1 - (l - r) ** 2)
+        res = (1 - (r - l) ** 2)
         headers = ["no.", "p", "~p", l_str, r_str, res_str]
         return [[p, np, l, r, res], headers]
 
     @staticmethod
     def contradiction(p):
-        np = 0 if p == 1 else 1
+        np = 1 - p
 
         res_str = "[~(p & ~p)] <=> 1"
 
@@ -89,14 +90,14 @@ class BooleanAlgebra:
         r_str = "1"
         r = 1
 
-        res = (1 - (l - r) ** 2)
+        res = (1 - (r - l) ** 2)
         headers = ["no.", "p", "~p", l_str, r_str, res_str]
         return [[p, np, l, r, res], headers]
 
     # Prawo idempotentności alternatywy
     @staticmethod
     def alternative_simplification(p):
-        np = 0 if p == 1 else 1
+        np = 1 - p
         res_str = "(p | p) <=> p"
 
         l_str = "(p | p)"
@@ -105,13 +106,13 @@ class BooleanAlgebra:
         r_str = "p"
         r = p
 
-        res = (1 - (l - r) ** 2)
+        res = (1 - (r - l) ** 2)
         headers = ["no.", "p", "~p", l_str, r_str, res_str]
         return [[p, np, l, r, res], headers]
 
     @staticmethod
     def conjuction_simplification(p):
-        np = 0 if p == 1 else 1
+        np = 1 - p
         res_str = "(p & ~p) <=> p"
 
         l_str = "(p & p)"
@@ -120,28 +121,28 @@ class BooleanAlgebra:
         r_str = "p"
         r = p
 
-        res = (1 - (l - r) ** 2)
+        res = (1 - (r - l) ** 2)
         headers = ["no.", "p", "~p", l_str, r_str, res_str]
         return [[p, np, l, r, res], headers]
 
     @staticmethod
-    def first_law_of_clavius(p):
-        np = 0 if p == 1 else 1
+    def first_rule_of_clavius(p):
+        np = 1 - p
         res_str = "(p => ~p) => ~p"
 
         l_str = "(p => ~p)"
-        l = 1 - (p & (1 - np))
+        l = 1 - (p * (1 - np))
 
         r_str = "(~p)"
         r = np
 
-        res = (1 - (l - r) ** 2)
+        res = 1 - (l * (1 - np))
         headers = ["no.", "p", "~p", l_str, r_str, res_str]
         return [[p, np, l, r, res], headers]
 
     @staticmethod
-    def second_law_of_clavius(p):
-        np = 0 if p == 1 else 1
+    def second_rule_of_clavius(p):
+        np = 1 - p
         res_str = "(~p => p) => p"
 
         l_str = "(~p => p)"
@@ -150,12 +151,12 @@ class BooleanAlgebra:
         r_str = "p"
         r = p
 
-        res = (1 - (l - r) ** 2)
+        res = 1 - (l * (1 - p))
         headers = ["no.", "p", "~p", l_str, r_str, res_str]
         return [[p, np, l, r, res], headers]
 
     @staticmethod
-    def law_of_duns_scotus(p, q):
+    def rule_of_duns_scotus(p, q):
         res_str = "(~p => p) => p"
 
         l_str = "(~q)"
@@ -164,10 +165,9 @@ class BooleanAlgebra:
         r_str = "(q => p)"
         r = 1 - (q & (1 - p))
 
-        res = 1 - (l & (1 - r))
+        res = 1 - (l * (1 - p))
         headers = ["no.", "p", "q", l_str, r_str, res_str]
         return [[p, q, l, r, res], headers]
-
 
     @staticmethod
     def first_law_of_simplification(p, q):
@@ -179,25 +179,76 @@ class BooleanAlgebra:
         r_str = "(q => p)"
         r = 1 - (p & 1 - q)
 
-        res = 1 - (l & (1 - r))
-        # headers = ["no.", "p", "~p", "q", "~q", l_str, r_str, res_str]
-        # return [[np, p, q, nq, l, r, res], headers]
-
+        res = 1 - (l * (1 - p))
         headers = ["no.", "p", "q", l_str, r_str, res_str]
         return [[p, q, l, r, res], headers]
 
     @staticmethod
     def second_law_of_simplification(p, q):
-        np = 0 if p == 1 else 1
         res_str = "(q) => (p => q)"
 
         l_str = "(q & p)"
         l = (q & p)
 
         r_str = "(q)"
-        r = 1 - (q & (1 - np))
+        r = q
 
-        res = 1 - (l & (1 - r))
+        res = 1 - (l * (1 - p))
         headers = ["no.", "p", "q", l_str, r_str, res_str]
         return [[p, q, l, r, res], headers]
 
+    @staticmethod
+    def first_de_morgan_law(p, q):
+        res_str = "~(q & p) <=> ((~q) | (~p))"
+
+        l_str = "~(q & p)"
+        l = 1 - (q & p)
+
+        r_str = "((~q) | (~p))"
+        r = (1 - q) | (1 - p)
+
+        res = 1 - ((r - l) ** 2)
+        headers = ["no.", "p", "q", l_str, r_str, res_str]
+        return [[p, q, l, r, res], headers]
+
+    @staticmethod
+    def second_de_morgan_law(p, q):
+        res_str = "(~(q | p)) <=> ((~q) & (~p))"
+
+        l_str = "(~(q | p))"
+        l = 1 - (q & p)
+
+        r_str = "((~q) & (~p))"
+        r = (1 - q) | (1 - p)
+
+        res = 1 - ((r - l) ** 2)
+        headers = ["no.", "p", "q", l_str, r_str, res_str]
+        return [[p, q, l, r, res], headers]
+
+    @staticmethod
+    def first_rule_of_implication(p, q):
+        res_str = "(q => p) <=> (p | (~q))"
+
+        l_str = "(q => p)"
+        l = 1 - (q * (1 - p))
+
+        r_str = "(p | (~q))"
+        r = 1 - (p | (1 - q))
+
+        res = 1 - ((r - l) ** 2)
+        headers = ["no.", "p", "q", l_str, r_str, res_str]
+        return [[p, q, l, r, res], headers]
+
+    @staticmethod
+    def first_rule_of_exclusive_disjunction(p, q):
+        res_str = "(q | p) <=> [(q & (~p)) | ((~q) & q)]"
+
+        l_str = "(q | p)"
+        l = (q | p)
+
+        r_str = "[(q & (~p)) | ((~q) & q)]"
+        r = (q * (1 - p) | ((1 - q) & q))
+
+        res = 1 - ((r - l) ** 2)
+        headers = ["no.", "p", "q", l_str, r_str, res_str]
+        return [[p, q, l, r, res], headers]
