@@ -7,7 +7,7 @@ class BooleanAlgebra:
     @staticmethod
     def make_table_of_truth_to_range_and_print(boolean_function, q=None, title="Truth Table"):
         truth_table = []
-        res = None
+        res = 1
         headers = []
 
         if q is None:
@@ -15,24 +15,17 @@ class BooleanAlgebra:
                 tt, headers = boolean_function(i)
                 tt.insert(0, i + 1)
                 truth_table.append(tt)
-
-            res = 1 if tt[len(tt) - 1] == 1 else 0
+                if tt[len(tt) - 1] == 0:
+                    res = 0
 
         else:
-            tt, headers = boolean_function(0, 0)
-            tt.insert(0, 0)
-            truth_table.append(tt)
-            tt, headers = boolean_function(0, 1)
-            tt.insert(0, 1)
-            truth_table.append(tt)
-            tt, headers = boolean_function(1, 0)
-            tt.insert(0, 2)
-            truth_table.append(tt)
-            tt, headers = boolean_function(1, 1)
-            tt.insert(0, 3)
-            truth_table.append(tt)
-
-            res = 1 if tt[len(tt) - 1] == 1 else 0
+            bin_arr = [[0, 0], [0, 1], [1, 0], [1, 1]]
+            for arr in bin_arr:
+                i, j = arr
+                tt, headers = boolean_function(i, j)
+                truth_table.append(tt)
+                if tt[len(tt) - 1] == 0:
+                    res = 0
 
         BooleanAlgebra.print_table_of_truth(truth_table, headers, res, title=title)
         return [truth_table, res]
@@ -184,7 +177,7 @@ class BooleanAlgebra:
         return [[p, q, l, r, res], headers]
 
     @staticmethod
-    def second_law_of_simplification(p, q):
+    def second_rule_of_simplification(p, q):
         res_str = "(q) => (p => q)"
 
         l_str = "(q & p)"
@@ -198,7 +191,7 @@ class BooleanAlgebra:
         return [[p, q, l, r, res], headers]
 
     @staticmethod
-    def first_de_morgan_law(p, q):
+    def first_de_morgans_rule(p, q):
         res_str = "~(q & p) <=> ((~q) | (~p))"
 
         l_str = "~(q & p)"

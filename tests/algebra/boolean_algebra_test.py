@@ -2,14 +2,14 @@ import unittest
 from app.algebra.boolean_algebra import BooleanAlgebra
 
 
-class MyTestCase(unittest.TestCase):
+class BooleanAlgebraTests(unittest.TestCase):
 
     def test_law_of_double_negation_valid(self):
         tt, result = BooleanAlgebra.make_table_of_truth_to_range_and_print(BooleanAlgebra.double_negation,
                                                                            title="Double Negation Truth Table")
         self.assertEqual(result, 1)
 
-    def test_law_of_excluded_middle_valid(self):
+    def test_rule_of_excluded_middle_valid(self):
         tt, result = BooleanAlgebra.make_table_of_truth_to_range_and_print(BooleanAlgebra.excluded_middle,
                                                                            title="Excluded Middle Truth Table")
         self.assertEqual(result, 1)
@@ -48,25 +48,25 @@ class MyTestCase(unittest.TestCase):
     def test_first_law_of_simplification(self):
         tt, result = BooleanAlgebra.make_table_of_truth_to_range_and_print(BooleanAlgebra.first_law_of_simplification,
                                                                            q=True,
-                                                                           title="First Law of Simplification Truth Table")
+                                                                           title="First Rule of Simplification Truth Table")
         self.assertEqual(result, 1)
 
     def test_second_law_of_simplification(self):
-        tt, result = BooleanAlgebra.make_table_of_truth_to_range_and_print(BooleanAlgebra.second_law_of_simplification,
+        tt, result = BooleanAlgebra.make_table_of_truth_to_range_and_print(BooleanAlgebra.second_rule_of_simplification,
                                                                            q=True,
-                                                                           title="Second Law of Simplification Truth Table")
+                                                                           title="Second Rulecd of Simplification Truth Table")
         self.assertEqual(result, 1)
 
     def test_first_de_morgan_law(self):
-        tt, result = BooleanAlgebra.make_table_of_truth_to_range_and_print(BooleanAlgebra.first_de_morgan_law,
+        tt, result = BooleanAlgebra.make_table_of_truth_to_range_and_print(BooleanAlgebra.first_de_morgans_rule,
                                                                            q=True,
-                                                                           title="First De Morgan's Law Truth Table")
+                                                                           title="First De Morgan's Rule Truth Table")
         self.assertEqual(result, 1)
 
     def test_second_de_morgan_law(self):
         tt, result = BooleanAlgebra.make_table_of_truth_to_range_and_print(BooleanAlgebra.second_de_morgan_law,
                                                                            q=True,
-                                                                           title="Second De Morgan's Law Truth Table")
+                                                                           title="Second De Morgan's Rule Truth Table")
         self.assertEqual(result, 1)
 
     def test_first_rule_of_implication(self):
