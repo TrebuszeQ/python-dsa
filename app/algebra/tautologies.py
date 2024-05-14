@@ -1,7 +1,7 @@
 from tabulate import tabulate
 
 
-class BooleanAlgebra:
+class Tautologies:
     truth_table = []
 
     @staticmethod
@@ -27,7 +27,7 @@ class BooleanAlgebra:
                 if tt[len(tt) - 1] == 0:
                     res = 0
 
-        BooleanAlgebra.print_table_of_truth(truth_table, headers, res, title=title)
+        Tautologies.print_table_of_truth(truth_table, headers, res, title=title)
         return [truth_table, res]
 
     @staticmethod

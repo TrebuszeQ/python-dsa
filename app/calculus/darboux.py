@@ -1,4 +1,4 @@
-from cli import Cli
+from app.utils.input_readers import try_read_input_float, read_interval_closed_float
 
 
 # twierdzenie o przyjmowaniu wartosci posrednich Darboux
@@ -60,10 +60,10 @@ class Darboux:
 
     @staticmethod
     def _take_point(a, b):
-        d = Cli.try_read_input_float(f"Podaj punkt w przedziale <{a}, {b}>.\n")
+        d = try_read_input_float(f"Podaj punkt w przedziale <{a}, {b}>.\n")
 
         while d < a or d > b:
-            d = Cli.try_read_input_float(f"Podaj punkt w przedziale <{a}, {b}>.\n")
+            d = try_read_input_float(f"Podaj punkt w przedziale <{a}, {b}>.\n")
 
         return d
 
@@ -86,24 +86,8 @@ class Darboux:
 
     @staticmethod
     def darboux():
-        a, b = Cli.read_interval_closed_float("Podaj lewostronna granice przedzialu.\n",
+        a, b = read_interval_closed_float("Podaj lewostronna granice przedzialu.\n",
                                               "Podaj prawostronna granice przedzialu.\n")
         d = Darboux._take_point(a, b)
         Darboux._bisection_recursive(a, b, d)
         return False
-
-    # @staticmethod
-    # def darboux():
-    #     a, b = Cli.read_interval_closed_float("Podaj lewostronna granice przedzialu.\n",
-    #                                           "Podaj prawostronna granice przedzialu.\n")
-    #
-    #     i = a
-    #     while i == b:
-    #         if Darboux._has_darboux_point(a, b):
-    #             fc = Darboux._calculate_func(i)
-    #             if fc == 0:
-    #                 return True
-    #
-    #             i += 0.001
-    #
-    #     return False

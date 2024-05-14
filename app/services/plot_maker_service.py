@@ -1,5 +1,6 @@
 import random
 import matplotlib.pyplot as plt
+from pygments.lexers import q
 
 
 class PlotMakerService:
@@ -51,3 +52,12 @@ class PlotMakerService:
     def get_random_color(self):
         num = random.randrange(0, len(self._colors) - 1, 1)
         return self._colors[num]
+
+    def make_line_plot(self, title, marker, size):
+        color = self.get_random_color()
+
+        plt.plot(self._x_arr, self._y_arr, label="line", color=color, marker=marker, s=size)
+        plt.xlabel('x - axis')
+        plt.ylabel('y - axis')
+        plt.title(title)
+        plt.legend()
