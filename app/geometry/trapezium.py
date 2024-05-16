@@ -1,4 +1,4 @@
-from app.services.plot_maker_service import PlotMakerService
+from app.services.plot_maker_service import PlotMaker
 
 
 class Trapezium:
@@ -6,7 +6,7 @@ class Trapezium:
     def area(self):
         return self._area
 
-    def __init__(self, a, b, h, plot_maker_service: PlotMakerService):
+    def __init__(self, a, b, h, plot_maker_service: PlotMaker):
         self._a = a
         self._b = b
         self._h = h

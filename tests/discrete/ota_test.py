@@ -1,6 +1,6 @@
 import unittest
 from app.discrete.ota import Ota
-from app.services.plot_maker_service import PlotMakerService
+from app.services.plot_maker_service import PlotMaker
 
 
 class OtaTests(unittest.TestCase):
@@ -37,7 +37,7 @@ class OtaTests(unittest.TestCase):
         lis = [2, 3, 7, 11, 17, 23, 31, 47]
         ota = Ota(lis)
 
-        plot_maker = PlotMakerService(ota.x_arr, ota.y_arr)
+        plot_maker = PlotMaker(ota.x_arr, ota.y_arr)
         plot_maker.make_scatter_plot("Plot of Ota function", 'o', 20)
 
 

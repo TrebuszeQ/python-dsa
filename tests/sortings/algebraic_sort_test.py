@@ -1,4 +1,4 @@
-from app.services.plot_maker_service import PlotMakerService
+from app.services.plot_maker_service import PlotMaker
 from app.sortings.algebraic_sort import algebraic_sort
 from app.discrete.ota import Ota
 import unittest
@@ -27,7 +27,7 @@ class AlgebraicSortCase(unittest.TestCase):
         ota_reversed = Ota(lis)
         algebraic_sort(ota_reversed)
 
-        plot_maker = PlotMakerService(ota.x_arr, ota_reversed.y_arr)
+        plot_maker = PlotMaker(ota.x_arr, ota_reversed.y_arr)
         plot_maker.make_scatter_plot("Plot of Ota function", 'o', 20)
 
     def test_both_plots_visually_valid(self):
@@ -39,7 +39,7 @@ class AlgebraicSortCase(unittest.TestCase):
 
         sum_x = ota.x_arr + ota_reversed.x_arr
         sum_y = ota.y_arr + ota_reversed.y_arr
-        plot_maker = PlotMakerService(sum_x, sum_y)
+        plot_maker = PlotMaker(sum_x, sum_y)
         plot_maker.make_scatter_plot("Plot of ota and reverse sorted ota function", 'o', 20)
 
 

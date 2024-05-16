@@ -3,7 +3,9 @@ import matplotlib.pyplot as plt
 from pygments.lexers import q
 
 
-class PlotMakerService:
+class PlotMaker:
+    _colors = ["brown", "teal", "red", "blue", "green", "cyan", "magenta", "orange", "pink", "purple"]
+
     @property
     def colors(self):
         return self._colors
@@ -16,15 +18,25 @@ class PlotMakerService:
     def y_arr(self):
         return self._y_arr
 
-    def __init__(self, x_arr: [], y_arr: []):
-        self._colors = ["brown", "teal", "red", "blue", "green", "cyan", "magenta", "orange", "pink", "purple"]
-        self._x_arr = x_arr
-        self._y_arr = y_arr
-        self._ax = plt.gca()
-        self.__x_limit = None
+    @colors.setter
+    def colors(self, value):
+        self._colors = value
+
+    @x_arr.setter
+    def x_arr(self, value):
+        self._x_arr = value
         self.__set_x_axis_limit()
-        self.__y_limit = None
+
+    @y_arr.setter
+    def y_arr(self, value):
+        self._y_arr = value
         self.__set_y_axis_limit()
+
+    def __init__(self):
+        self._y_arr = None
+        self._x_arr = None
+        self._colors = ["brown", "teal", "red", "blue", "green", "cyan", "magenta", "orange", "pink", "purple"]
+        self._ax = plt.gca()
 
     def __set_x_axis_limit(self):
         interval = max(self._x_arr) / (len(self._x_arr) - 1)
