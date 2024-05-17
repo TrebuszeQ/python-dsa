@@ -27,8 +27,11 @@ class AlgebraicSortCase(unittest.TestCase):
         ota_reversed = Ota(lis)
         algebraic_sort(ota_reversed)
 
-        plot_maker = PlotMaker(ota.x_arr, ota_reversed.y_arr)
-        plot_maker.make_scatter_plot("Plot of Ota function", 'o', 20)
+        plot_maker = PlotMaker()
+        plot_maker.x_arr = ota.x_arr
+        plot_maker.y_arr = ota_reversed.y_arr
+        plot = plot_maker.make_scatter_plot("Plot of Ota function", 'o', 20)
+        plot.show()
 
     def test_both_plots_visually_valid(self):
         lis = [2, 3, 7, 11, 17, 23, 31, 47]
@@ -39,8 +42,11 @@ class AlgebraicSortCase(unittest.TestCase):
 
         sum_x = ota.x_arr + ota_reversed.x_arr
         sum_y = ota.y_arr + ota_reversed.y_arr
-        plot_maker = PlotMaker(sum_x, sum_y)
-        plot_maker.make_scatter_plot("Plot of ota and reverse sorted ota function", 'o', 20)
+        plot_maker = PlotMaker()
+        plot_maker.x_arr = sum_x
+        plot_maker.y_arr = sum_y
+        plot = plot_maker.make_scatter_plot("Plot of ota and reverse sorted ota function", 'o', 20)
+        plot.show()
 
 
 if __name__ == '__main__':
