@@ -34,7 +34,9 @@ class SinglePolynomial:
     def poly(self, arr: [[float]]):
         self._poly = arr
 
-    def __init__(self, poly_arr: [[float]], constant_term: float):
+    def __init__(self, x_points: [float], y_points: [float], constant_term: float):
+        poly_arr = [[x, y] for x, y in zip(x_points, y_points)]
+        poly_arr.append([0, constant_term])
         poly_arr = sorted(poly_arr, key=itemgetter(1), reverse=True)
         self._degree = poly_arr[0][1] if len(poly_arr) > 0 else 0
         self._constant_term = constant_term
