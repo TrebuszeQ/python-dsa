@@ -8,8 +8,8 @@ class LagrangeInterpolation:
         return self._poly
 
     def __init__(self, x_points: [float], y_points: [float], constant_term: float):
-        poly_arr = [[x, y] for x, y in zip(x_points, y_points)]
-        poly_arr.append([0, constant_term])
+        poly_arr = [[y, x] for y, x in zip(y_points, x_points)]
+        poly_arr.append([constant_term, 0])
         self.x_points = x_points
         self.y_points = y_points
         self._poly = SinglePolynomial(x_points, y_points, constant_term)
@@ -19,15 +19,18 @@ class LagrangeInterpolation:
     def l(self, x, i):
         result = 1
 
-        degree = self._poly.degree
-        for j in range(degree):
+        n = self._poly.degree - 1
+        for j in range(n):
+            xj = self.x_points[j]
+            xi = self.x_points[i]
             if i != j:
-                xj = self.x_points[j]
-                xi = self.x_points[i]
                 result *= (x - xj) / (xi - xj)
 
-    def basis_polynomial(self, i, x):
+        return result
+
+    def _basis_polynomial(self, i, x):
         result = 1
+
         for j in range(len(self.x_points)):
             if i != j:
                 result *= (x - self.x_points[j]) / (self.x_points[i] - self.x_points[j])
@@ -35,14 +38,15 @@ class LagrangeInterpolation:
         return result
 
     def interpolate(self, x):
-        interpolated_value2 = 0
-        interpolated_value = 0
+        interpolated_value2 = 1
+        interpolated_value = 1
         degree = self._poly.degree
 
-        for i in range(degree):
-            interpolated_value2 *= self.x_points[i] * self._poly.horner_method(x)
-            interpolated_value *= self.x_points[i] * self.basis_polynomial(i, x)
+        for i in range(1, degree):
+            interpolated_value *= self.y_points[i] * self._basis_polynomial(i, x)
+            interpolated_value2 *= self.y_points[i] * self.l(x, i)
 
+        interpolated_value2 *= self._poly.horner_method(x)
         return interpolated_value
 
     def __str__(self):

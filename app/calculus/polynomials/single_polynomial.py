@@ -19,7 +19,7 @@ class SinglePolynomial:
 
     @property
     def poly_str(self):
-        return self._poly_str
+        return self.__poly_to_string
 
     @y.setter
     def y(self, x):
@@ -35,13 +35,12 @@ class SinglePolynomial:
         self._poly = arr
 
     def __init__(self, x_points: [float], y_points: [float], constant_term: float):
-        poly_arr = [[x, y] for x, y in zip(x_points, y_points)]
-        poly_arr.append([0, constant_term])
+        poly_arr = [[y, x] for y, x in zip(y_points, x_points)]
+        poly_arr.append([constant_term, 0])
         poly_arr = sorted(poly_arr, key=itemgetter(1), reverse=True)
         self._degree = poly_arr[0][1] if len(poly_arr) > 0 else 0
         self._constant_term = constant_term
         self._poly = poly_arr
-        self._poly_str = SinglePolynomial.__poly_to_string(self)
         self._y = None
 
     def sort_and_fill(self):
@@ -88,11 +87,12 @@ class SinglePolynomial:
 
         return p * x + self._constant_term
 
+    # wrong
     def __poly_to_string(self):
         poly = ""
         for pair in self._poly:
-            num = "+" + str(pair[0]) if pair[0] >= 0 else "-" + str(pair[0])
-            coefficient = "+" + str(pair[1]) if pair[1] >= 0 else "-" + str(pair[1])
+            num = str(pair[0]) if pair[0] >= 0 else "-" + str(pair[0])
+            coefficient = str(pair[1]) if pair[1] >= 0 else "-" + str(pair[1])
 
             poly += num + "^" + coefficient
 

@@ -10,7 +10,7 @@ class LagrangeInterpolationTests(unittest.TestCase):
         self.lagrange_interpolation = LagrangeInterpolation(x_points, y_points, 5)
 
     def test_interpolation_valid(self):
-        pass
+        value = self.lagrange_interpolation.interpolate(2)
 
 
 if __name__ == '__main__':
