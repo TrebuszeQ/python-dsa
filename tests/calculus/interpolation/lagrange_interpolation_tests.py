@@ -7,10 +7,11 @@ class LagrangeInterpolationTests(unittest.TestCase):
     def setUp(self):
         x_points = [1, 2, 3, 4]
         y_points = [1, 4, 9, 16]
-        self.lagrange_interpolation = LagrangeInterpolation(x_points, y_points, 5)
+        self.lagrange_interpolation = LagrangeInterpolation(x_points, y_points)
 
     def test_interpolation_valid(self):
         value = self.lagrange_interpolation.interpolate(2)
+        self.assertEqual(4, value)
 
 
 if __name__ == '__main__':
