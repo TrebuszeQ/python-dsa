@@ -15,28 +15,29 @@ class LagrangeInterpolation:
             raise ValueError("x_points and y_points must have the same length")
 
     def _basis_polynomial(self, i, x):
-        result = 1
+        pi = 1
 
         for j in range(self._poly.degree):
             try:
-                if i == j:
-                    result *= (x - self.x_points[i]) / (self.x_points[i] - self.x_points[j])
+                if i != j:
+                    pi *= (x - self.x_points[j]) / (self.x_points[i] - self.x_points[j])
                 else:
-                    result *= (x - self.x_points[j]) / (self.x_points[i] - self.x_points[j])
+                    pi *= (x - self.x_points[i]) / (self.x_points[i] - self.x_points[j])
+
             except ZeroDivisionError:
                 return 0
 
-        return result
+        return pi
 
     def interpolate(self, x):
-        interpolated_value = 1
+        sigma = 1
 
         i = 0
         for y_point in self.y_points:
-            interpolated_value += y_point * self._basis_polynomial(i, x)
+            sigma += y_point * self._basis_polynomial(i, x)
             i += 1
 
-        return interpolated_value
+        return sigma
 
     def __str__(self):
         return f"Lagrange interpolation polynomial for points {list(zip(self.x_points, self.y_points))})"
