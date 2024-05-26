@@ -27,6 +27,14 @@ class LagrangeInterpolation:
             except ZeroDivisionError:
                 return 0
 
+            # l0 = (x - x1)(x - x2) / (x0 - x1)(x0 - x2)
+            # l1 = (x - x0)(x - x2) / (x1 - x0)(x1 - x2)
+            # l2 = (x - x0)(x - x1) / (x2 - x0)(x2 - x1)
+            #
+            # l0 = (x - x1)(x - x2)(x - x3) / (x0 - x1)(x0 - x2)(x0 - x3)
+            # l1 = (x - x0)(x - x2)(x - x3) / (x1 - x0)(x1 - x2)(x1 - x3)
+            # l2 = (x - x0)(x - x1)(x - x3) / (x2 - x0)(x2 - x1)(x2 - x3)
+
         return pi
 
     def interpolate(self, x):
