@@ -2,6 +2,8 @@ import math
 from dataclasses import dataclass
 from operator import itemgetter
 
+from app.services.plot_maker_service import PlotMaker
+
 
 @dataclass(repr=True)
 class SinglePolynomial:
@@ -40,6 +42,9 @@ class SinglePolynomial:
         self._degree = poly_arr[0][1] if len(poly_arr) > 0 else 0
         self._poly = poly_arr
         self._value = None
+        self._plot_maker = PlotMaker()
+        self._plot_maker.x_arr = x_points
+        self._plot_maker.y_arr = y_points
 
     def sort_and_fill(self):
         n = round(self._degree)
@@ -96,3 +101,8 @@ class SinglePolynomial:
 
         return poly_str
 
+    def scatter_plot(self, marker, size, points_on_plot: bool):
+        return self._plot_maker.make_scatter_plot("Single Polynomial Scatter Plot", marker, size, values=points_on_plot).plot
+
+    def line_plot(self, size, points_on_plot: bool):
+        return self._plot_maker.make_line_plot("Single Polynomial Line Plot", size, values=points_on_plot).plot
