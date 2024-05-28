@@ -102,7 +102,7 @@ class SinglePolynomial:
         return poly_str
 
     def scatter_plot(self, marker, size, points_on_plot: bool):
-        return self._plot_maker.make_scatter_plot("Single Polynomial Scatter Plot", marker, size, values=points_on_plot).plot
+        return self._plot_maker.make_single_scatter_plot("Single Polynomial Scatter Plot", marker, size, values=points_on_plot).plot
 
     def line_plot(self, size, points_on_plot: bool):
-        return self._plot_maker.make_line_plot("Single Polynomial Line Plot", size, values=points_on_plot).plot
+        return self._plot_maker.make_single_line_plot("Single Polynomial Line Plot", size, values=points_on_plot).plot

@@ -40,7 +40,7 @@ class OtaTests(unittest.TestCase):
         plot_maker = PlotMaker()
         plot_maker.x_arr = ota.x_arr
         plot_maker.y_arr = ota.y_arr
-        plot = plot_maker.make_scatter_plot("Plot of Ota function", 'o', 20)
+        plot = plot_maker.make_single_scatter_plot("Plot of Ota function", 'o', 20)
         plot.show()
 
 

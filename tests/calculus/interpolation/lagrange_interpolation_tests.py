@@ -36,12 +36,12 @@ class LagrangeInterpolationTests(unittest.TestCase):
         value = self.lagrange_interpolation.interpolate(201)
         self._plot_maker.x_arr = x_points
         self._plot_maker.y_arr = y_points
-        plot = self._plot_maker.make_line_plot("Interpolation Polynomial Plot", 32, True)
+        plot = self._plot_maker.make_single_line_plot("Interpolation Polynomial Plot", 32, True)
         plot.show()
 
         self.lagrange_interpolation.x_points = self.lagrange_interpolation._pi_points
         self.lagrange_interpolation.y_points = self.lagrange_interpolation._sigma_points
-        plot = self._plot_maker.make_line_plot("Lagrange Interpolation Plot", 32, True)
+        plot = self._plot_maker.make_single_line_plot("Lagrange Interpolation Plot", 32, True)
         plot.show()
 
 

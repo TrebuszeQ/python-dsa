@@ -39,7 +39,7 @@ class DefiniteIntegral:
     def set_plot(self):
         self._plot_maker.x_arr = self._arr_x
         self._plot_maker.y_arr = self._arr_y
-        self.plot = self._plot_maker.make_line_plot("Definite Integral Plot", 30)
+        self.plot = self._plot_maker.make_single_line_plot("Definite Integral Plot", 30)
 
     def __str__(self):
         return f"Definite integral of {self.function.__name__} from {self._lower_bound} to {self._upper_bound} to {self._upper_bound}."

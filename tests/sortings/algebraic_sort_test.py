@@ -30,7 +30,7 @@ class AlgebraicSortCase(unittest.TestCase):
         plot_maker = PlotMaker()
         plot_maker.x_arr = ota.x_arr
         plot_maker.y_arr = ota_reversed.y_arr
-        plot = plot_maker.make_scatter_plot("Plot of Ota function", 'o', 20)
+        plot = plot_maker.make_single_scatter_plot("Plot of Ota function", 'o', 20)
         plot.show()
 
     def test_both_plots_visually_valid(self):
@@ -45,7 +45,7 @@ class AlgebraicSortCase(unittest.TestCase):
         plot_maker = PlotMaker()
         plot_maker.x_arr = sum_x
         plot_maker.y_arr = sum_y
-        plot = plot_maker.make_scatter_plot("Plot of ota and reverse sorted ota function", 'o', 20)
+        plot = plot_maker.make_single_scatter_plot("Plot of ota and reverse sorted ota function", 'o', 20)
         plot.show()
 
 

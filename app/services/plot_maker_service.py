@@ -1,6 +1,5 @@
 import random
 import matplotlib.pyplot as plt
-from pygments.lexers import q
 
 
 class PlotMaker:
@@ -25,37 +24,41 @@ class PlotMaker:
     @x_arr.setter
     def x_arr(self, value):
         self._x_arr = value
-        self.__set_x_limit(value)
 
     @y_arr.setter
     def y_arr(self, value):
         self._y_arr = value
-        self.__set_y_limit(value)
 
     def __init__(self):
         self._y_arr = None
         self._x_arr = None
         self._colors = ["brown", "teal", "red", "blue", "green", "cyan", "magenta", "orange", "pink", "purple"]
-        self._ax = plt.gca()
 
-    def __set_x_limit(self, x_arr):
+    def __compute_x_limit(self, x_arr):
         len_x = len(x_arr)
         maxx = x_arr[len_x - 1]
         interval_x = maxx / (len_x - 1)
         xlim = maxx + interval_x
-        self._ax.set_xlim([0, xlim])
+        return xlim
 
-    def __set_y_limit(self, y_arr):
+    def __compute_y_limit(self, y_arr):
         len_y = len(y_arr)
         maxy = y_arr[len_y - 1]
         interval_y = maxy / (len_y - 1)
         ylim = maxy + interval_y
-        self._ax.set_ylim([0, ylim])
+        return ylim
 
-    def make_scatter_plot(self, title, marker: str, size, values=True):
+    def make_single_scatter_plot(self, title, marker: str, size, values=True):
         color = self.get_random_color()
 
         plt.scatter(self._x_arr, self._y_arr, label="dots", color=color, marker=marker, s=size)
+
+        self._finish_single_plot(title, size, values)
+
+        return plt
+
+    def _finish_single_plot(self, title, size, values):
+        plt.grid()
         plt.xlabel('x - axis')
         plt.ylabel('y - axis')
         plt.title(title)
@@ -65,27 +68,23 @@ class PlotMaker:
             for x, y in zip(self._x_arr, self._y_arr):
                 plt.text(x, y, " " + str(y).ljust(3, " "), color="black", fontsize=size / 1.75)
 
-        return plt
+        xlim = self.__compute_x_limit(self._x_arr)
+        ylim = self.__compute_y_limit(self._y_arr)
+        # fig = plt.figure()
+        # ax = fig.add_subplot()
+        # ax.plot()
+        # ax.set_xlim(xlim)
+        plt.xlim(xmin=0, xmax=xlim)
+        plt.ylim(xmin=0, xmax=ylim)
 
     def get_random_color(self):
         num = random.randrange(0, len(self._colors) - 1, 1)
         return self._colors[num]
 
-    def make_line_plot(self, title, size, values=False):
+    def make_single_line_plot(self, title, size, values=False):
         color = self.get_random_color()
 
         plt.plot(self._x_arr, self._y_arr, label="line", color=color)
-        plt.xlabel('x - axis')
-        plt.ylabel('y - axis')
-        plt.title(title)
-        plt.legend()
-
-        if values:
-            for x, y in zip(self._x_arr, self._y_arr):
-                plt.text(x, y, " " + str(y).ljust(3, " "), color="black", fontsize=size / 1.75)
+        self._finish_single_plot(title, size, values)
 
         return plt
-
-    def _define_averages(self):
-        pass
-
