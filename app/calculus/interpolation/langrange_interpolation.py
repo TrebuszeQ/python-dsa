@@ -1,5 +1,4 @@
 from app.calculus.polynomials.single_polynomial import SinglePolynomial
-from app.services.plot_maker_service import PlotMaker
 
 
 class LagrangeInterpolation:
@@ -31,9 +30,11 @@ class LagrangeInterpolation:
         for j in range(self._poly.degree):
             try:
                 if i != j:
+                    print(f"{pi} *= ({x} - {self.x_points[j]}) / ({self.y_points[i]} - {self.x_points[j]})")
                     pi *= (x - self.x_points[j]) / (self.x_points[i] - self.x_points[j])
 
             except ZeroDivisionError:
+                print("0")
                 return 0
 
         self._pi_points.append(pi)
@@ -44,10 +45,12 @@ class LagrangeInterpolation:
 
         i = 0
         for y_point in self.y_points:
-            sigma += y_point * self._basis_polynomial(i, x)
+            poly_value = self._basis_polynomial(i, x)
+            print(f"{sigma} += {y_point} * {poly_value})")
+            sigma += y_point * poly_value
+            self._sigma_points.append(sigma)
             i += 1
 
-        self._sigma_points.append(sigma)
         return sigma
 
     def __str__(self):
