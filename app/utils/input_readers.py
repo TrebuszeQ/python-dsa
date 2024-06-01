@@ -33,7 +33,7 @@ def try_read_input_int(message):
                 raise ValueError
 
         except ValueError or ...:
-            print("Wprowadzono nieprawidlowa wartosc.\n")
+            print("Inserted value is not a valid one.\n")
 
 
 def try_read_input_string(message):
@@ -50,7 +50,7 @@ def read_float_triple():
     variables: chr = ["a", "b", "c"]
 
     for i in range(0, values.__len__()):
-        values[i] = try_read_input_float("Wprowadz wartosc " + variables[i] + ":\n")
+        values[i] = try_read_input_float("Input value no. " + variables[i] + ":\n")
 
     return values
 
@@ -74,7 +74,7 @@ def try_read_input_float(message):
                 raise ValueError
 
         except ValueError or ...:
-            print("Wprowadzono nieprawidlowa wartosc.\n")
+            print("Inserted value is not a valid one.\n")
 
 
 def read_interval_open_float(msg1, msg2):
@@ -87,7 +87,7 @@ def read_interval_open_float(msg1, msg2):
         b = try_read_input_float(msg2)
 
         if a >= b:
-            print("a musi byc wieksze od b.")
+            print("a must be greater than b.")
 
     return a, b
 
@@ -101,6 +101,6 @@ def read_interval_closed_float(msg1, msg2):
         b = try_read_input_float(msg2)
 
         if a > b:
-            print("a musi byc mniejsze badz rowne b.")
+            print("a must be lesser or equal than b.")
 
     return a, b
