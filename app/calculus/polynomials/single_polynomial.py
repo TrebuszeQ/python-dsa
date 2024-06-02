@@ -3,6 +3,7 @@ from dataclasses import dataclass
 from operator import itemgetter
 
 from app.services.plot_maker_service import PlotMaker
+from app.calculus.polynomials.horner_method import horner_method
 
 
 @dataclass(repr=True)
@@ -82,15 +83,8 @@ class SinglePolynomial:
     def horner_method(self, x):
         poly = self.__fill_gaps()
         n = round(self._degree)
-        p = 0
+        return horner_method(poly, n, x)
 
-        for i in range(n):
-            term = poly[i][0]
-            p = p * x + term
-
-        return p * x
-
-    # wrong
     def __poly_to_string(self):
         poly_str = ""
         for pair in self._poly:
