@@ -14,5 +14,5 @@ class Trapezium:
         self._plot_maker_service = plot_maker_service
 
     def make_plot(self):
-        plot = self._plot_maker_service.make_single_line_plot("Trapezium Plot", marker="o", size="30")
+        plot = self._plot_maker_service.make_single_linear_plot("Trapezium Plot", marker="o", size="30")
         plot.show()

@@ -58,7 +58,7 @@ class PlotMaker:
         num = random.randrange(0, len(self._colors) - 1, 1)
         return self._colors[num]
 
-    def make_single_line_plot(self, title, size, values=False):
+    def make_single_linear_plot(self, title, size, values=False):
         color = self.get_random_color()
 
         plt.plot(self._x_arr, self._y_arr, label="line", color=color)
