@@ -1,5 +1,5 @@
 import unittest
-from app.algebra.tautologies import Tautologies
+from app.algebra.tautology.tautologies import Tautologies
 
 
 class TautologiesTests(unittest.TestCase):
