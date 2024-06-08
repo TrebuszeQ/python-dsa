@@ -43,8 +43,11 @@ class AdjustableEratosthenesSieve:
 
         i = 0
         while i != to_range:
+            self._logger.debug(f"{i}:")
             prime = self._primes[i]
             for j in range(len(not_filtered)):
+                self._logger.debug(f"{j}:")
+                print(j)
                 num = not_filtered[j]
                 if num not in self._primes and num % prime != 0:
                     filtered.append(num)
@@ -56,9 +59,3 @@ class AdjustableEratosthenesSieve:
             filtered = []
             to_range = len(self._primes)
             i += 1
-
-
-
-
-
-
