@@ -36,22 +36,28 @@ class AdjustableEratosthenesSieve:
 
         self._primes = filtered
 
+    def _filter_primes(self, not_filtered, prime):
+        filtered = []
+
+        for j in range(len(not_filtered)):
+            self._logger.debug(f"{j}:")
+            print(j)
+            num = not_filtered[j]
+            if num not in self._primes and num % prime != 0:
+                filtered.append(num)
+
+        return filtered
+
     def find_primes(self):
         not_filtered = [i for i in range(2, self._end)]
         filtered = []
         to_range = len(self._primes)
 
         i = 0
-        while i != to_range:
+        while i <= to_range:
             self._logger.debug(f"{i}:")
             prime = self._primes[i]
-            for j in range(len(not_filtered)):
-                self._logger.debug(f"{j}:")
-                print(j)
-                num = not_filtered[j]
-                if num not in self._primes and num % prime != 0:
-                    filtered.append(num)
-
+            filtered = self._filter_primes(not_filtered, prime)
             not_filtered = filtered
             if len(filtered) == 0:
                 break

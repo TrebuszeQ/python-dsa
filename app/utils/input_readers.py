@@ -20,7 +20,7 @@ def try_read_input_int(message):
 
     while truth is False:
         value = input(message)
-        value_int = None
+        print()
 
         try:
             value_int = int(value)
@@ -41,7 +41,7 @@ def try_read_input_string(message):
 
     while value is None or len(value) == 0:
         value = input(message)
-
+        print()
     return value
 
 
@@ -61,7 +61,7 @@ def try_read_input_float(message):
 
     while truth is False:
         value = input(message)
-        value_float = None
+        print()
 
         try:
             value_float = float(value)

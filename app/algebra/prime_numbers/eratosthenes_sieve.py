@@ -24,7 +24,7 @@ class EratosthenesSieve:
         to_range = len(self._primes)
 
         i = 0
-        while i != to_range:
+        while i <= to_range:
             prime = self._primes[i]
             for j in range(len(not_filtered)):
                 num = not_filtered[j]

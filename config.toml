@@ -1,0 +1,7 @@
+[concurrency]
+MAX_EXECUTOR_WORKERS=70
+
+[logging]
+LOG_LEVEL="info"
+LOG_FORMAT="%(asctime)s | %(filename)s | %(funcName)s | %(levelname)s \n %(message)s"
+LOG_DATE_FORMAT="%m/%d/%Y %I:%M:%S %p"
