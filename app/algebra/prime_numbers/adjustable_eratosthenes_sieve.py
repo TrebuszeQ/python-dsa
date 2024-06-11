@@ -1,67 +1,46 @@
 import logging
+import math
+from app.algebra.prime_numbers.eratosthenes_sieve import EratosthenesSieve
 
 
-class AdjustableEratosthenesSieve:
+class AdjustableEratosthenesSieve(EratosthenesSieve):
     @property
     def primes(self):
         return self._primes
 
     def __init__(self, end, increment):
-        self._logger = logging.getLogger(__name__)
-        self._end = end
         self._increment = increment
-        self._validate_end()
+        super().__init__(end)
+        self._logger = logging.getLogger(__name__)
         self._validate_increment()
-        self._primes = [2]
-        self.find_primes()
-        self._filter_out_by_increment()
-
-    def _validate_end(self):
-        if self._end < 2:
-            self._end = 2
-            self._logger.error("End is lesser than 2. Set to 2.")
 
     def _validate_increment(self):
         if self._increment < 0 or self._increment > self._end:
             self._increment = 1
             self._logger.error("Increment is invalid. Set to 1.")
 
-    def _filter_out_by_increment(self):
-        if self._increment == 1:
-            return
-
-        filtered = []
-        for i in range(0, len(self._primes), self._increment):
-            filtered.append(self._primes[i])
-
-        self._primes = filtered
-
-    def _filter_primes(self, not_filtered, prime):
-        filtered = []
-
-        for j in range(len(not_filtered)):
-            self._logger.debug(f"{j}:")
-            print(j)
-            num = not_filtered[j]
-            if num not in self._primes and num % prime != 0:
-                filtered.append(num)
-
-        return filtered
-
     def find_primes(self):
-        not_filtered = [i for i in range(2, self._end)]
-        filtered = []
-        to_range = len(self._primes)
-
-        i = 0
-        while i <= to_range:
-            self._logger.debug(f"{i}:")
-            prime = self._primes[i]
-            filtered = self._filter_primes(not_filtered, prime)
-            not_filtered = filtered
-            if len(filtered) == 0:
-                break
-            self.primes.append(filtered[0])
-            filtered = []
-            to_range = len(self._primes)
+        nums = [True for i in range(2, self._end)]
+        sqrt_end = math.sqrt(self._end)
+        i = self._primes[0]
+        while i <= sqrt_end:
+            if nums[i]:
+                incr = 0
+                j = i ** 2 + incr * i
+                while j <= self._end:
+                    j = i ** 2 + incr * i
+                    try:
+                        nums[j] = False
+                    except IndexError:
+                        break
+                    incr += 1
             i += 1
+        return self._filter_primes(nums)
+
+    def _filter_primes(self, nums):
+        prime = self.primes[0]
+        for i in range(self.primes[0], len(nums), self._increment):
+            if nums[i] is True:
+                self._primes.append(i)
+
+        return self._primes
