@@ -43,8 +43,3 @@ class EratosthenesSieve:
                 self._primes.append(i)
 
         return self._primes
-
-
-
-
-

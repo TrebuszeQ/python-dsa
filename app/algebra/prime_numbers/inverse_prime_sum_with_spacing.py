@@ -3,11 +3,12 @@ from app.algebra.prime_numbers.eratosthenes_sieve import EratosthenesSieve
 
 
 def sum_inverted_primes_with_spacing():
-    increment = _read_spacing()
+    increment = _read_spacing() + 1
     end = _read_upper_limit()
     sieve = EratosthenesSieve(end)
     primes = sieve.find_primes()
     sigma = _sum_inverse_primes(primes, increment)
+    print(f"spacing: {increment - 1}; limit: {end}; sum: {sigma} ")
     return sigma
 
 
@@ -22,7 +23,7 @@ def _read_spacing():
 
 def _read_upper_limit():
     value = 0
-    allowed = [50, 1000000, 10000000, 50000000]
+    allowed = [1000000, 10000000, 50000000]
     while value not in allowed:
         value = input_readers.try_read_input_int("Choose upper limit from: [1m, 10m, 50m].")
 
@@ -37,7 +38,7 @@ def _sum_inverse_primes(primes, increment):
     sigma = 0
     for i in range(0, len(primes), increment):
         prime = primes[i]
-        inverse_prime = 1.0/prime
-        sigma += inverse_prime
+        inversed_prime = 1.0/prime
+        sigma += inversed_prime
 
     return sigma
